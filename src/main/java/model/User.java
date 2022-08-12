@@ -31,7 +31,7 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Budget_Categories> budget_categories;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Goals> goals;
+    private List<Goal> goals;
 
     public User() {
     }
