@@ -10,18 +10,23 @@ public class Budget {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne
-    @JoinColumn("user_id")
+    @JoinColumn(name = "user_id")
     private User user;
     @Column(nullable = false, length = 240)
     private String title;
-    @Column(columnDefinition = "INT")
-    private int amount;
+    @Column(columnDefinition = "DECIMAL(13,2)", nullable = false)
+    private double amount;
+
 
     public Budget(long id, User user, String title, int amount) {
         this.id = id;
         this.user = user;
         this.title = title;
         this.amount = amount;
+    }
+
+    public Budget() {
+
     }
 
     public long getId() {
@@ -48,11 +53,11 @@ public class Budget {
         this.title = title;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 }
