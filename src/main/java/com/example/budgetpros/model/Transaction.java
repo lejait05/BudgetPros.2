@@ -1,6 +1,7 @@
 package com.example.budgetpros.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="transactions")
@@ -36,7 +37,7 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn (name = "goal_id")
-    private Goal goal;
+    private List<Goal> goals;
 
     public Transaction() {
     }
