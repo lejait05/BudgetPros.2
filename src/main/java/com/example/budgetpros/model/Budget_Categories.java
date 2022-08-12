@@ -1,11 +1,13 @@
-package com.example.budgetpros;
+package com.example.budgetpros.model;
+
+import com.example.budgetpros.model.User;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "budget")
+@Table(name = "budget_categories")
 
-public class Budget {
+public class Budget_Categories {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -17,16 +19,20 @@ public class Budget {
     @Column(columnDefinition = "DECIMAL(13,2)", nullable = false)
     private double amount;
 
+    public Budget_Categories() {
+    }
 
-    public Budget(long id, User user, String title, int amount) {
-        this.id = id;
+    public Budget_Categories(User user, String title, double amount) {
         this.user = user;
         this.title = title;
         this.amount = amount;
     }
 
-    public Budget() {
-
+    public Budget_Categories(long id, User user, String title, int amount) {
+        this.id = id;
+        this.user = user;
+        this.title = title;
+        this.amount = amount;
     }
 
     public long getId() {

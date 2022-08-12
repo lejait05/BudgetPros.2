@@ -1,7 +1,6 @@
 package com.example.budgetpros.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name="transactions")
@@ -28,21 +27,21 @@ public class Transaction {
     private double amount;
 
     @ManyToOne
-    @JoinColumn (name = "transaction_type_id")
-    private Transaction_Type transactionType;
+    @JoinColumn (name = "transaction_types_id")
+    private Transaction_Types transactionType;
 
     @ManyToOne
-    @JoinColumn (name = "budget_category_id")
+    @JoinColumn (name = "budget_categories_id")
     private Budget_Categories budgetCategories;
 
     @ManyToOne
     @JoinColumn (name = "goal_id")
-    private List<Goal> goals;
+    private Goal goal;
 
     public Transaction() {
     }
 
-    public Transaction(User user, String title, String memo, String date, double amount, Transaction_Type transactionType, Budget_Categories budgetCategories, Goal goal) {
+    public Transaction(User user, String title, String memo, String date, double amount, Transaction_Types transactionType, Budget_Categories budgetCategories, Goal goal) {
         this.user = user;
         this.title = title;
         this.memo = memo;
@@ -53,7 +52,7 @@ public class Transaction {
         this.goal = goal;
     }
 
-    public Transaction(long id, User user, String title, String memo, String date, double amount, Transaction_Type transactionType, Budget_Categories budgetCategories, Goal goal) {
+    public Transaction(long id, User user, String title, String memo, String date, double amount, Transaction_Types transactionType, Budget_Categories budgetCategories, Goal goal) {
         this.id = id;
         this.user = user;
         this.title = title;
@@ -113,11 +112,11 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public Transaction_Type getTransactionType() {
+    public Transaction_Types getTransactionType() {
         return transactionType;
     }
 
-    public void setTransactionType(Transaction_Type transactionType) {
+    public void setTransactionType(Transaction_Types transactionType) {
         this.transactionType = transactionType;
     }
 

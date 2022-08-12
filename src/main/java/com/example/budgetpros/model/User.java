@@ -1,7 +1,7 @@
 package com.example.budgetpros.model;
 
 import javax.persistence.*;
-import javax.transaction.Transaction;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -28,8 +28,10 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Transaction> transactions ;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Budget_Categories> budget_categories;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Goal> goals;
 

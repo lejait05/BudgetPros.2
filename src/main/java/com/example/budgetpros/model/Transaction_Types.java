@@ -1,10 +1,11 @@
+package com.example.budgetpros.model;
+
 import javax.persistence.*;
 import java.util.List;
 
 
 @Entity
 @Table(name = "transaction_types")
-
 public class Transaction_Types {
 
     @Id
@@ -15,8 +16,8 @@ public class Transaction_Types {
     @Column(length = 120, nullable = false)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "transaction_type")
-    private List<Transaction>transactions;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "transactionType")
+    private List<Transaction> transactions;
 
     public Transaction_Types() {
 
