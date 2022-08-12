@@ -1,4 +1,4 @@
-package model;
+package com.example.budgetpros.model;
 
 import javax.persistence.*;
 import javax.transaction.Transaction;
