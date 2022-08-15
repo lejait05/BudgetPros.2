@@ -1,6 +1,9 @@
 package com.example.budgetpros.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -18,8 +21,9 @@ public class Goal {
     @Column(length = 100, nullable = false)
     private String title;
 
-    @Column(length = 100, nullable = false)
-    private String dateCreated;
+    @Column(name = "dateCreated")
+    @CreationTimestamp
+    private LocalDateTime dateCreated;
 
     @Column(length = 100, nullable = false)
     private String dateCompleted;
@@ -36,7 +40,7 @@ public class Goal {
     public Goal() {
     }
 
-    public Goal(User user, String title, String dateCreated, String dateCompleted, int goalAmount, int currentAmount, List<Transaction> transactions) {
+    public Goal(User user, String title, LocalDateTime dateCreated, String dateCompleted, int goalAmount, int currentAmount, List<Transaction> transactions) {
         this.user = user;
         this.title = title;
         this.dateCreated = dateCreated;
@@ -46,7 +50,7 @@ public class Goal {
         this.transactions = transactions;
     }
 
-    public Goal(long id, User user, String title, String dateCreated, String dateCompleted, int goalAmount, int currentAmount, List<Transaction> transactions) {
+    public Goal(long id, User user, String title, LocalDateTime dateCreated, String dateCompleted, int goalAmount, int currentAmount, List<Transaction> transactions) {
         this.id = id;
         this.user = user;
         this.title = title;
@@ -81,11 +85,11 @@ public class Goal {
         this.title = title;
     }
 
-    public String getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(String dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 
