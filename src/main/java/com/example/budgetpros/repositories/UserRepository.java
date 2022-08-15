@@ -1,4 +1,4 @@
-package com.example.budgetpros.model.repos;
+package com.example.budgetpros.repositories;
 
 import org.apache.catalina.User;
 import org.springframework.data.jpa.repository.JpaRepository;
