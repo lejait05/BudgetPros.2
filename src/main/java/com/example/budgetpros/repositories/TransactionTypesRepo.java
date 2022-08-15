@@ -1,4 +1,4 @@
-package com.example.budgetpros;
+package com.example.budgetpros.repositories;
 
 import com.example.budgetpros.model.Transaction_Types;
 import org.springframework.data.jpa.repository.JpaRepository;

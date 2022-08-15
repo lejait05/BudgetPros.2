@@ -41,6 +41,16 @@ public class Transaction {
     public Transaction() {
     }
 
+    public Transaction(User user, String title, String memo, String date, double amount, Transaction_Types transactionType, Budget_Categories budgetCategories) {
+        this.user = user;
+        this.title = title;
+        this.memo = memo;
+        this.date = date;
+        this.amount = amount;
+        this.transactionType = transactionType;
+        this.budgetCategories = budgetCategories;
+    }
+
     public Transaction(User user, String title, String memo, String date, double amount, Transaction_Types transactionType, Budget_Categories budgetCategories, Goal goal) {
         this.user = user;
         this.title = title;
