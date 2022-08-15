@@ -66,4 +66,6 @@ public class Budget_Categories {
     public void setAmount(double amount) {
         this.amount = amount;
     }
+
+
 }

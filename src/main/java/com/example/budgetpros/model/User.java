@@ -11,6 +11,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(length = 120, nullable = false, unique = true)
+    private String username;
+
     @Column(nullable = false)
     private String first_name;
 
@@ -38,8 +41,8 @@ public class User {
     public User() {
     }
 
-    public User(long id, String first_name, String last_name, String email, String password, long phone_number) {
-        this.id = id;
+    public User(String username, String first_name, String last_name, String email, String password, long phone_number) {
+        this.username = username;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -47,12 +50,17 @@ public class User {
         this.phone_number = phone_number;
     }
 
-    public User(String first_name, String last_name, String email, String password, long phone_number) {
+    public User(long id, String username, String first_name, String last_name, String email, String password, long phone_number, List<Transaction> transactions, List<Budget_Categories> budget_categories, List<Goal> goals) {
+        this.id = id;
+        this.username = username;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.password = password;
         this.phone_number = phone_number;
+        this.transactions = transactions;
+        this.budget_categories = budget_categories;
+        this.goals = goals;
     }
 
     public long getId() {
@@ -61,6 +69,14 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirst_name() {
@@ -101,5 +117,29 @@ public class User {
 
     public void setPhone_number(long phone_number) {
         this.phone_number = phone_number;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
+    public List<Budget_Categories> getBudget_categories() {
+        return budget_categories;
+    }
+
+    public void setBudget_categories(List<Budget_Categories> budget_categories) {
+        this.budget_categories = budget_categories;
+    }
+
+    public List<Goal> getGoals() {
+        return goals;
+    }
+
+    public void setGoals(List<Goal> goals) {
+        this.goals = goals;
     }
 }
