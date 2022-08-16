@@ -4,6 +4,7 @@ import com.example.budgetpros.model.Transaction;
 import com.example.budgetpros.model.User;
 import com.example.budgetpros.repositories.*;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
+@Controller
 public class TransactionController {
 
     private TransactionRepository transactionDao;
@@ -28,13 +30,12 @@ public class TransactionController {
         this.usersDao = usersDao;
     }
 
-    @GetMapping("/transactions")
+    @GetMapping("/profile")
     public String showTransactions(Model model){
         List<Transaction> transactionList = transactionDao.findAll();
-
+        model.addAttribute("transaction", new Transaction());
         model.addAttribute("transactions", transactionList);
-
-        return "profile";
+        return "/profile";
     }
 
     @GetMapping("/transactions/{id}")
@@ -44,16 +45,10 @@ public class TransactionController {
         return "profile/modal/show";
     }
 
-    @GetMapping("/transactions/create")
-    public String createTransaction(Model model){
-        Transaction transaction = new Transaction();
-        model.addAttribute("transaction", transaction);
-        return "profile/modal/create";
-    }
-
     @PostMapping("/transactions/create")
     public String insertTransaction(@ModelAttribute Transaction transaction){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = usersDao.findById(1L).get();
         transaction.setUser(user);
         transactionDao.save(transaction);
         return "redirect:/profile";
