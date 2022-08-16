@@ -39,7 +39,7 @@ public class Transaction {
     private Budget_Categories budgetCategories;
 
     @ManyToOne
-    @JoinColumn (name = "goal_id")
+    @JoinColumn (name = "goal_id", nullable = true)
     private Goal goal;
 
     public Transaction() {

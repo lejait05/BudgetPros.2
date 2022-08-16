@@ -26,7 +26,7 @@ public class Goal {
     private LocalDateTime dateCreated;
 
     @Column(length = 100, nullable = false)
-    private String dateCompleted;
+    private String endDate;
 
     @Column(columnDefinition = "INT", nullable = false)
     private int goalAmount;
@@ -40,22 +40,22 @@ public class Goal {
     public Goal() {
     }
 
-    public Goal(User user, String title, LocalDateTime dateCreated, String dateCompleted, int goalAmount, int currentAmount, List<Transaction> transactions) {
+    public Goal(User user, String title, LocalDateTime dateCreated, String endDate, int goalAmount, int currentAmount, List<Transaction> transactions) {
         this.user = user;
         this.title = title;
         this.dateCreated = dateCreated;
-        this.dateCompleted = dateCompleted;
+        this.endDate = endDate;
         this.goalAmount = goalAmount;
         this.currentAmount = currentAmount;
         this.transactions = transactions;
     }
 
-    public Goal(long id, User user, String title, LocalDateTime dateCreated, String dateCompleted, int goalAmount, int currentAmount, List<Transaction> transactions) {
+    public Goal(long id, User user, String title, LocalDateTime dateCreated, String endDate, int goalAmount, int currentAmount, List<Transaction> transactions) {
         this.id = id;
         this.user = user;
         this.title = title;
         this.dateCreated = dateCreated;
-        this.dateCompleted = dateCompleted;
+        this.endDate = endDate;
         this.goalAmount = goalAmount;
         this.currentAmount = currentAmount;
         this.transactions = transactions;
@@ -93,12 +93,12 @@ public class Goal {
         this.dateCreated = dateCreated;
     }
 
-    public String getDateCompleted() {
-        return dateCompleted;
+    public String getEndDate() {
+        return endDate;
     }
 
-    public void setDateCompleted(String dateCompleted) {
-        this.dateCompleted = dateCompleted;
+    public void setEndDate(String dateCompleted) {
+        this.endDate = endDate;
     }
 
     public int getGoalAmount() {
