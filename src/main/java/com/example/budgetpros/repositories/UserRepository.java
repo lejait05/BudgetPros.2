@@ -1,6 +1,5 @@
 package com.example.budgetpros.repositories;
 
-
 import com.example.budgetpros.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
