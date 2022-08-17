@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="partials/partials.html :: head('Create Goal')"></head>
+<body>
+<nav th:replace="partials/partials.html :: nav"></nav>
+<header th:replace="partials/partials.html :: header('Create a Goal')"></header>
+<main class="container">
+    <form th:action="@{/goals/create}" th:method="POST" th:object="${newGoal}">
+        <div class="mb-3">
+            <label class="form-label" for="title">Title</label>
+            <input class="form-control" type="text" th:field="*{title}" id="title" placeholder="Enter title here">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="dateCreated">Start Saving On:</label>
+            <time th:text="${#dates.createToday()}" id="dateCreated"></time>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="endDate">Finish Saving By:</label>
+            <input type="date" th:field="${goal.endDate}" id="endDate"></input>
+        </div>
+
+
+
+
+
+
+
+
+            <div class="d-grid">
+                <button>Submit</button>
+            </div>
+    </form>
+</main>
+</body>
+</html>
