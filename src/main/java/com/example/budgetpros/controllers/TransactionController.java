@@ -64,14 +64,21 @@ public class TransactionController {
     public String editTransaction(@PathVariable long id, Model model){
         Transaction transaction = transactionDao.findById(id).get();
         model.addAttribute("transaction", transaction);
-        return "profile/modal/edit";
+        return "/profile";
     }
 
     @PostMapping("/transactions/{id}/edit")
     public String submitEditTransaction(@ModelAttribute Transaction transaction){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Transaction transactionToUpdate = transactionDao.findById(transaction.getId()).get();
+        transactionToUpdate.setAmount(transaction.getAmount());
+        transactionToUpdate.setTitle(transaction.getTitle());
+        transactionToUpdate.setMemo(transaction.getMemo());
+        transactionToUpdate.setTransactionType(transaction.getTransactionType());
+        transactionToUpdate.setBudgetCategories(transaction.getBudgetCategories());
+        User user = usersDao.findById(1L).get();
         transaction.setUser(user);
-        transactionDao.save(transaction);
-        return "/redirect:/profile";
+        transactionDao.save(transactionToUpdate);
+        return "redirect:/profile";
     }
 }

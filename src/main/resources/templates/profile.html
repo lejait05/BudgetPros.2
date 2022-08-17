@@ -2,14 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="partials/partials.html :: head('Profile')"></head>
 <body style="background-color: lightsteelblue">
-<header class=" d-flex justify-content-between" style="background-color: steelblue">
-    <div class="ms-3 py-2 fs-2">BudgetPros</div>
+<header class=" d-none d-md-flex justify-content-between" style="background-color: steelblue">
+    <div class=" ms-3 py-2 fs-2">BudgetPros</div>
     <button class="h-50 me-3 mt-3">Currency Converter|V|</button>
 </header>
+<div class="d-sm-block d-md-none">
+    <nav th:replace="partials/partials.html :: nav"></nav>
+</div>
+<div class=" d-sm-block d-md-none ">
+    <button class="h-50 me-3 mt-3">Currency Converter|V|</button>
+</div>
 <br>
-<div class="d-md-flex">
-    <div class="d-md-flex vh-100 col-md-2 col-sm-12">
-<!--        <nav th:replace="partials/partials.html :: nav"></nav>-->
+<div class=" d-md-flex">
+    <div class="d-none d-md-flex vh-100 col-md-2 col-sm-12">
         <nav class="mt-1 w-100" style="background-color: steelblue">
             <div class="ms-3 fs-3 my-3">Username</div>
             <div class="ms-3 mb-3"><a class="fs-3" href="/">Goals</a></div>
@@ -28,10 +33,20 @@
         <div class="container d-flex justify-content-between">
             <button id="filterbtn">Filter Transactions</button>
             <h4>Transaction History</h4>
-            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createModal">Add Transaction</button>
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createModal">Add
+                Transaction
+            </button>
         </div>
-        <div class="container mt-3">
-            <div class="d-flex justify-content-between border p-1" th:each="transaction: ${transactions}">
+        <div class="container mt-3" th:each="transaction: ${transactions}">
+            <div
+                    th:data-id="${transaction.id}"
+                    th:data-title="${transaction.title}"
+                    th:data-transactionDate="${#temporals.format(transaction.date, 'MMM-dd-yy')}"
+                    th:data-amount="${transaction.amount}"
+                    th:data-transactionType="${transaction.transactionType.name}"
+                    th:date-memo="${transaction.memo}"
+                    th:data-budgetCategory="${transaction.budgetCategories}"
+                    class="transaction d-flex justify-content-between border p-1">
                 <h5 th:text="${transaction.title}">Transaction Title</h5>
                 <h5 th:text="${#temporals.format(transaction.date, 'MMM-dd-yy')}">Date</h5>
                 <h5 th:text="${transaction.amount}">$150.00</h5>
@@ -59,7 +74,7 @@
                     <input th:field="*{title}" type="text" id="title" name="title" placeholder="Enter Title">
                     <hr>
                     <label for="amount">Amount</label>
-                    <input th:field="*{amount}" type="number" id="amount" name="amount" placeholder="$0.00">
+                    <input th:field="*{amount}" type="number" step="any" id="amount" name="amount" placeholder="$0.00">
                     <hr>
                     <label for="memo">Transaction Details</label>
                     <textarea th:field="*{memo}" name="memo" id="memo" placeholder="Transaction Details"></textarea>
@@ -94,8 +109,86 @@
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-        crossorigin="anonymous"></script>
+
+<div>
+    <div class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Transaction</h5>
+                    <button type="button" class="eventClose btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="detailsForm" th:action="@{/transactions//edit}" th:method="post"
+                          th:object="${transaction}">
+                        <label for="title">Title</label>
+                        <input th:field="*{title}" type="text" id="detailsTitle" name="title">
+                        <hr>
+                        <label for="amount">Amount</label>
+                        <input th:field="*{amount}" type="number" step="any" id="detailsAmount" name="amount">
+                        <hr>
+                        <label for="memo">Transaction Details</label>
+                        <textarea th:field="*{memo}" name="memo" id="detailsMemo"></textarea>
+                        <hr>
+                        <label for="transactionType">Transaction Type</label>
+                        <select th:field="*{transactionType}" name="transactionType" id="detailsTransactionType">
+                            <option value="1">one-time deposit</option>
+                            <option value="2">one-time expense</option>
+                            <option value="3">recurring income</option>
+                            <option value="4">recurring expense</option>
+                        </select>
+                        <hr>
+                        <label for="budgetCategories">Budget Category</label>
+                        <select th:field="*{budgetCategories}" name="budgetCategories" id="detailsBudgetCategories">
+                            <option value="1">none</option>
+                            <option value="2">electrical</option>
+                            <option value="3">mortgage</option>
+                            <option value="4">gas</option>
+                            <option value="5">fuel</option>
+                            <option value="6">water</option>
+                            <option value="7">loan</option>
+                            <option value="8">groceries</option>
+                        </select>
+                        <hr>
+                        <div class="d-grid">
+                            <button class="btn btn-block btn-primary">Edit</button>
+                        </div>
+
+                </form>
+                <div class="d-flex mt-2">
+                    <div>
+                        <button type="button" class="eventClose btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                    <div class="ms-auto">
+                        <form th:action="@{/transactions//delete}" th:method="post">
+                            <button id="deletebtn" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+<block th:replace="partials/partials.html :: scripts"></block>
+<script src="/jquery-3.6.0.js"></script>
+<script>
+    $(".transaction").click(function () {
+        $(".modal").css("display", "block")
+        $("#detailsForm").attr("action", "/transactions/" + $(this).data("id") + "/edit");
+        $("#deletebtn").parent().attr("action", "/transactions/" + $(this).data("id") + "/delete")
+        $("#detailsTitle").attr("value", $(this).data("title"))
+        $("#detailsAmount").attr("value", $(this).data("amount"))
+        $("#detailsMemo").attr("value", $(this).data("memo"))
+        $("#detailsTransactionType").attr("value", $(this).data("transactionType"))
+        $("#detailsBudgetCategories").attr("value", $(this).data("budgetCategory"))
+    })
+    $(".eventClose").click(function () {
+        $(".modal").css("display", "none")
+    })
+</script>
 </body>
 </html>

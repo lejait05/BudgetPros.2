@@ -2,3 +2,6 @@ body{
     background: aquamarine;
 }
 
+.modal{
+    display: none;
+}
