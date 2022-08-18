@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 public class GoalsController {
-    private final GoalsRepository goalsDao;
+    private GoalsRepository goalsDao;
     private UserRepository userDao;
 
     public GoalsController(GoalsRepository goalsDao, UserRepository userDao) {
