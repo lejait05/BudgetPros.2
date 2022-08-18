@@ -7,13 +7,9 @@
 <main class="container">
     <article th:each="goal :${goals}">
         <a th:href="@{/goals/{id}(id=${goal.id})}">
-            <h3 th:text="'Title: ' + ${goal.title}"></h3>
-           <table>
-               <tr >
-                   <td th:text=" ${goal.dateCreated}"></td>
-                   <td th:text="${goal.endDate}"></td>
-                   <td th:text="${goal.goalAmount}"></td>
-               </tr>
+            <h3 th:text="'Goal: ' + ${goal.title}"></h3>
+            <p th:text="'Started '+ ${goal.dateCreated} + 'Finish by ' + ${goal.endDate} + 'Amount to Success: ' + ${goal.goalAmount}">
+            </p>
         </a>
     </article>
 </main>

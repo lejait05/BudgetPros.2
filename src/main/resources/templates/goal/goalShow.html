@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="partials/partials.html :: head('Goal Details')"></head>
+<body>
+<nav th:replace="partials/partials.html :: nav"></nav>
+<header th:replace="partials/partials.html :: header(${goal.title})"></header>
+<main class="container">
+    <p th:text="${goal.dateCreated}"></p>
+    <p class="text-center">Created by <span th:text="${goal.user.email}"></span></p>
+    <th:block sec:authorize="isAuthenticated()">
+        <div class="text-center" th:if="${#authentication.principal.id == goal.user.id}">
+            <a class="btn btn-outline-dark rounded" th:href="@{/goal/{id}/edit(id=${goal.id})}"><i class="bi bi-pencil"></i></a>
+            <form class="d-inline" th:action="@{/goal/{id}/delete/(id=${goal.id})}" th:method="POST">
+                <button id="delete-post-btn" class="btn btn-outline-danger rounded"><i class="bi bi-trash"></i></button>
+            </form>
+        </div>
+    </th:block>
+</main>
+<th:block th:replace="partials/partials.html :: scripts"></th:block>
+</body>
+</html>

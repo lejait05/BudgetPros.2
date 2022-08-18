@@ -12,21 +12,17 @@
         </div>
         <div class="mb-3">
             <label class="form-label" for="dateCreated">Start Saving On:</label>
-            <time th:text="${#dates.createToday()}" id="dateCreated"></time>
+            <input type="date" name="dateCreated" id="dateCreated">
         </div>
         <div class="mb-3">
             <label class="form-label" for="endDate">Finish Saving By:</label>
-            <input type="date" th:field="${goal.endDate}" id="endDate"></input>
+            <input type="date" name="endDate" id="endDate">
         </div>
-
-
-
-
-
-
-
-
-            <div class="d-grid">
+<div class="mb-3">
+    <label class="form-label" for="goalAmount">Total to Be Saved:</label>
+    <input class="form-control" type="text" th:field="*{goalAmount}" id="goalAmount">
+</div>
+        <div class="d-grid">
                 <button>Submit</button>
             </div>
     </form>
