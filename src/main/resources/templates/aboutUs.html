@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="partials/partials.html :: head('About Us')"></head>
+<body>
+<nav th:replace="partials/partials.html :: nav"></nav>
+<header th:replace="partials/partials.html :: header('About the Team ')"></header>
+<main class="container">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col">
+            <article class="card">
+                <div class="card-body">
+                    <img class="card-img" src="/img/Mark.jpeg"/>
+                    <h5 class="card-title" >Mark Siebald</h5>
+                    <p class="card-text">hims stuff</p>
+                    <p class="card-text">more about him</p>
+                </div>
+            </article>
+        </div>
+        <div class="col">
+            <article class="card">
+                <div class="card-body">
+                    <img class="card-img" src="/img/Chris.jpeg"/>
+                    <h5 class="card-title">Christopher Merrit</h5>
+                    <p class="card-text">your stuff</p>
+                    <p class="card-text">more about you</p>
+                </div>
+            </article>
+        </div>
+
+        <div class="col">
+            <article class="card">
+                <img class="card-img-top" src="/img/me.jpeg"/>
+                <div class="card-body">
+                    <h5 class="card-title">Lineisha Gibson</h5>
+                    <p class="card-text"> my stuff</p>
+                    <p class="card-text">more about me</p>
+                </div>
+            </article>
+        </div>
+        <div class="col">
+            <article class="card">
+                <div class="card-body">
+                    <img class="card-img" src="/img/Jesse.jpeg"/>
+                    <h5 class="card-title">Jesse Mammosser</h5>
+                    <p class="card-text">thems stuff</p>
+                    <p class="card-text">more about themlol</p>
+                </div>
+            </article>
+        </div>
+    </div>
+    <th:block th:replace="partials/partials.html :: scripts"></th:block>
+</main>
+</body>
+</html>
