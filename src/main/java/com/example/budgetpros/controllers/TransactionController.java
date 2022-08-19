@@ -6,43 +6,86 @@ import com.example.budgetpros.repositories.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
 public class TransactionController {
 
     private TransactionRepository transactionDao;
-    private Budget_CategoriesRepository budgetCategoriesDao;
-    private GoalsRepository goalsDao;
-    private TransactionTypesRepo transactionTypesDao;
     private UserRepository usersDao;
 
-    public TransactionController(TransactionRepository transactionDao, Budget_CategoriesRepository budgetCategoriesDao, GoalsRepository goalsDao, TransactionTypesRepo transactionTypesDao, UserRepository usersDao) {
+    public TransactionController(TransactionRepository transactionDao, UserRepository usersDao) {
         this.transactionDao = transactionDao;
-        this.budgetCategoriesDao = budgetCategoriesDao;
-        this.goalsDao = goalsDao;
-        this.transactionTypesDao = transactionTypesDao;
         this.usersDao = usersDao;
     }
 
     @GetMapping("/profile")
-    public String showTransactions(Model model){
-        List<Transaction> transactionList = transactionDao.findAll();
+    public String showTransactions(@RequestParam(required = false) String sortTransaction, Model model){
         model.addAttribute("transaction", new Transaction());
-        model.addAttribute("transactions", transactionList);
-        return "/profile";
-    }
 
-    @GetMapping("/transactions/{id}")
-    public String showTransaction(@PathVariable long id, Model model){
-        Transaction transaction = transactionDao.findById(id).get();
-        model.addAttribute("transaction", transaction);
-        return "profile/modal/show";
+        User user = usersDao.findById(1L).get();
+        model.addAttribute("user", user);
+
+//        function for extra sum
+        List<Transaction> extraSumList = transactionDao.findAll();
+        for(Transaction transaction: extraSumList){
+            int extraSum = 0;
+            if(transaction.getTransactionType().getName().contains("one-time expense") && transaction.getBudgetCategories().getTitle().equals("none") || transaction.getTransactionType().getName().contains("recurring expense") && transaction.getBudgetCategories().getTitle().equals("none")){
+                extraSum += transaction.getAmount();
+
+            }
+            model.addAttribute("extraSum", extraSum);
+        }
+
+//        function for budget sum
+        List<Transaction> budgetSumList = transactionDao.findAll();
+        budgetSumList.removeIf(transaction -> transaction.getBudgetCategories().getTitle().contains("none"));
+        int budgetSum = 0;
+        for(Transaction transaction: budgetSumList){
+            budgetSum += transaction.getAmount();
+        }
+        model.addAttribute("budgetSum", budgetSum);
+
+//        Account balance feature
+        List<Transaction> accountBalanceList = transactionDao.findAll();
+        int accountBalance = 0;
+        for(Transaction transaction: accountBalanceList){
+            if(transaction.getTransactionType().getName().contains("one-time deposit") || transaction.getTransactionType().getName().contains("recurring income")){
+                accountBalance += transaction.getAmount();
+            } else if(transaction.getTransactionType().getName().contains("one-time expense") || transaction.getTransactionType().getName().contains("recurring expense")){
+                accountBalance -= transaction.getAmount();
+            }
+            model.addAttribute("accountBalance", accountBalance);
+        }
+
+
+// Conditionals for the filter feature
+        if(sortTransaction == null){
+            List<Transaction> reverseList = transactionDao.findAll();
+            Collections.reverse(reverseList);
+            model.addAttribute("transactions", reverseList);
+        } else if(sortTransaction.equals("1")){
+            List<Transaction> reverseList = transactionDao.findAll();
+            Collections.reverse(reverseList);
+            model.addAttribute("transactions", reverseList);
+        } else if(sortTransaction.equals("2")){
+            List<Transaction> transactionList = transactionDao.findAll();
+            model.addAttribute("transactions", transactionList);
+        } else if(sortTransaction.equals("3")) {
+            List<Transaction> budgetList = transactionDao.findAll();
+            budgetList.removeIf(transaction -> transaction.getBudgetCategories().getTitle().contains("none"));
+            model.addAttribute("transactions", budgetList);
+        } else if(sortTransaction.equals("4")){
+            List<Transaction> goalList = transactionDao.findAll();
+            goalList.removeIf(transaction -> transaction.getGoal() == null);
+        model.addAttribute("transactions", goalList);
+        }
+
+        return "/profile";
     }
 
     @PostMapping("/transactions/create")
@@ -60,12 +103,6 @@ public class TransactionController {
         return "redirect:/profile";
     }
 
-    @GetMapping("/transactions/{id}/edit")
-    public String editTransaction(@PathVariable long id, Model model){
-        Transaction transaction = transactionDao.findById(id).get();
-        model.addAttribute("transaction", transaction);
-        return "/profile";
-    }
 
     @PostMapping("/transactions/{id}/edit")
     public String submitEditTransaction(@ModelAttribute Transaction transaction){
