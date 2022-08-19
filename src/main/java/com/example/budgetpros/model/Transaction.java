@@ -1,6 +1,7 @@
 package com.example.budgetpros.model;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -24,8 +25,8 @@ public class Transaction {
     private String memo;
 
     @Column(name = "date")
-    @CreationTimestamp
-    private LocalDateTime date;
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    private String date;
 
     @Column(columnDefinition = "DECIMAL(13,2)", nullable = false)
     private double amount;
@@ -54,7 +55,7 @@ public class Transaction {
         this.budgetCategories = budgetCategories;
     }
 
-    public Transaction(User user, String title, String memo, LocalDateTime date, double amount, Transaction_Types transactionType, Budget_Categories budgetCategories, Goal goal) {
+    public Transaction(User user, String title, String memo, String date, double amount, Transaction_Types transactionType, Budget_Categories budgetCategories, Goal goal) {
         this.user = user;
         this.title = title;
         this.memo = memo;
@@ -65,7 +66,7 @@ public class Transaction {
         this.goal = goal;
     }
 
-    public Transaction(long id, User user, String title, String memo, LocalDateTime date, double amount, Transaction_Types transactionType, Budget_Categories budgetCategories, Goal goal) {
+    public Transaction(long id, User user, String title, String memo, String date, double amount, Transaction_Types transactionType, Budget_Categories budgetCategories, Goal goal) {
         this.id = id;
         this.user = user;
         this.title = title;
@@ -109,11 +110,11 @@ public class Transaction {
         this.memo = memo;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

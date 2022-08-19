@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="partials/partials.html :: head('Create Goal')"></head>
+<body>
+<nav th:replace="partials/partials.html :: nav"></nav>
+<header th:replace="partials/partials.html :: header('Create a Goal')"></header>
+<main class="container">
+    <form th:action="@{/goals/create}" th:method="POST" th:object="${newGoal}">
+        <div class="mb-3">
+            <label class="form-label" for="title">Title</label>
+            <input class="form-control" type="text" th:field="*{title}" id="title" placeholder="Enter title here">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="dateCreated">Start Saving On:</label>
+            <input type="date" name="dateCreated" id="dateCreated">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="endDate">Finish Saving By:</label>
+            <input type="date" name="endDate" id="endDate">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="goalAmount">Total to Be Saved:</label>
+            <input class="form-control" type="text" th:field="*{goalAmount}" id="goalAmount">
+        </div>
+<!--        <div class="mb-3">-->
+<!--            <label class="form-label" for="preSaved">Prior Savings:></label>-->
+<!--            <input class="form-control" type="text" th:field="*{preSaved}" onchange="calcule2()" id="preSaved" value="" size="8"/> -->
+<!--        </div>-->
+        <div class="d-grid">
+            <button>Submit</button>
+        </div>
+    </form>
+    <th:block th:replace="partials/partials.html :: scripts"></th:block>
+</main>
+</body>
+</html>
