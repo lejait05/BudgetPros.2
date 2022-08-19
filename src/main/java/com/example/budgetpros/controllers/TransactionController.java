@@ -27,13 +27,39 @@ public class TransactionController {
     public String showTransactions(@RequestParam(required = false) String sortTransaction, Model model){
         model.addAttribute("transaction", new Transaction());
 
-        User user = usersDao.findById(1L).get();
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+       String name = principal.getUsername();
+       User user = usersDao.findByUsername(name);
         model.addAttribute("user", user);
 
+
+        // Conditionals for the filter feature
+        if(sortTransaction == null){
+            List<Transaction> reverseList = transactionDao.findByUserId(user.getId());
+            Collections.reverse(reverseList);
+            model.addAttribute("transactions", reverseList);
+        } else if(sortTransaction.equals("1")){
+            List<Transaction> reverseList = transactionDao.findByUserId(user.getId());
+            Collections.reverse(reverseList);
+            model.addAttribute("transactions", reverseList);
+        } else if(sortTransaction.equals("2")){
+            List<Transaction> transactionList = transactionDao.findByUserId(user.getId());
+            model.addAttribute("transactions", transactionList);
+        } else if(sortTransaction.equals("3")) {
+            List<Transaction> budgetList = transactionDao.findByUserId(user.getId());
+            budgetList.removeIf(transaction -> transaction.getBudgetCategories().getTitle().contains("none"));
+            model.addAttribute("transactions", budgetList);
+        } else if(sortTransaction.equals("4")){
+            List<Transaction> goalList = transactionDao.findByUserId(user.getId());
+            goalList.removeIf(transaction -> transaction.getGoal() == null);
+            model.addAttribute("transactions", goalList);
+        }
+
+
 //        function for extra sum
-        List<Transaction> extraSumList = transactionDao.findAll();
+        List<Transaction> extraSumList = transactionDao.findByUserId(user.getId());
+        int extraSum = 0;
         for(Transaction transaction: extraSumList){
-            int extraSum = 0;
             if(transaction.getTransactionType().getName().contains("one-time expense") && transaction.getBudgetCategories().getTitle().equals("none") || transaction.getTransactionType().getName().contains("recurring expense") && transaction.getBudgetCategories().getTitle().equals("none")){
                 extraSum += transaction.getAmount();
 
@@ -42,7 +68,7 @@ public class TransactionController {
         }
 
 //        function for budget sum
-        List<Transaction> budgetSumList = transactionDao.findAll();
+        List<Transaction> budgetSumList = transactionDao.findByUserId(user.getId());
         budgetSumList.removeIf(transaction -> transaction.getBudgetCategories().getTitle().contains("none"));
         int budgetSum = 0;
         for(Transaction transaction: budgetSumList){
@@ -51,7 +77,7 @@ public class TransactionController {
         model.addAttribute("budgetSum", budgetSum);
 
 //        Account balance feature
-        List<Transaction> accountBalanceList = transactionDao.findAll();
+        List<Transaction> accountBalanceList = transactionDao.findByUserId(user.getId());
         int accountBalance = 0;
         for(Transaction transaction: accountBalanceList){
             if(transaction.getTransactionType().getName().contains("one-time deposit") || transaction.getTransactionType().getName().contains("recurring income")){
@@ -62,36 +88,12 @@ public class TransactionController {
             model.addAttribute("accountBalance", accountBalance);
         }
 
-
-// Conditionals for the filter feature
-        if(sortTransaction == null){
-            List<Transaction> reverseList = transactionDao.findAll();
-            Collections.reverse(reverseList);
-            model.addAttribute("transactions", reverseList);
-        } else if(sortTransaction.equals("1")){
-            List<Transaction> reverseList = transactionDao.findAll();
-            Collections.reverse(reverseList);
-            model.addAttribute("transactions", reverseList);
-        } else if(sortTransaction.equals("2")){
-            List<Transaction> transactionList = transactionDao.findAll();
-            model.addAttribute("transactions", transactionList);
-        } else if(sortTransaction.equals("3")) {
-            List<Transaction> budgetList = transactionDao.findAll();
-            budgetList.removeIf(transaction -> transaction.getBudgetCategories().getTitle().contains("none"));
-            model.addAttribute("transactions", budgetList);
-        } else if(sortTransaction.equals("4")){
-            List<Transaction> goalList = transactionDao.findAll();
-            goalList.removeIf(transaction -> transaction.getGoal() == null);
-        model.addAttribute("transactions", goalList);
-        }
-
         return "/profile";
     }
 
     @PostMapping("/transactions/create")
     public String insertTransaction(@ModelAttribute Transaction transaction){
-//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = usersDao.findById(1L).get();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         transaction.setUser(user);
         transactionDao.save(transaction);
         return "redirect:/profile";
@@ -106,14 +108,13 @@ public class TransactionController {
 
     @PostMapping("/transactions/{id}/edit")
     public String submitEditTransaction(@ModelAttribute Transaction transaction){
-//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Transaction transactionToUpdate = transactionDao.findById(transaction.getId()).get();
         transactionToUpdate.setAmount(transaction.getAmount());
         transactionToUpdate.setTitle(transaction.getTitle());
         transactionToUpdate.setMemo(transaction.getMemo());
         transactionToUpdate.setTransactionType(transaction.getTransactionType());
         transactionToUpdate.setBudgetCategories(transaction.getBudgetCategories());
-        User user = usersDao.findById(1L).get();
         transaction.setUser(user);
         transactionDao.save(transactionToUpdate);
         return "redirect:/profile";

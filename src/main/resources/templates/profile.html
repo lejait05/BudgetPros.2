@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 <head th:replace="partials/partials.html :: head('Profile')"></head>
 <body style="background-color: lightsteelblue">
 <header class=" d-none d-md-flex justify-content-between" style="background-color: steelblue">
@@ -18,7 +19,7 @@
         <nav class="mt-1 w-100" style="background-color: steelblue">
             <div class="ms-3 fs-3 my-3 text-decoration-underline" th:text="${user.username}">Username</div>
             <div class="ms-3 mb-3"><a class="nav-link fs-3" href="/home">Home</a></div>
-            <div class="ms-3 mb-3" sec:authorize="!isAuthenticated()"><a class="nav-link fs-3" href="/goals">Goals</a></div>
+            <div class="ms-3 mb-3" sec:authorize="isAuthenticated()"><a class="nav-link fs-3" href="/goals">Goals</a></div>
             <div class="ms-3 mb-3" ><a class="nav-link fs-3" href="/about-us">About Us</a></div>
             <div class="ms-2 mb-3" sec:authorize="isAuthenticated()">
                 <form th:action="@{/logout}" th:method="post">
@@ -65,7 +66,7 @@
             <div
                     th:data-id="${transaction.id}"
                     th:data-title="${transaction.title}"
-                    th:data-transactionDate="${#temporals.format(transaction.date, 'MMM-dd-yy')}"
+                    th:data-date="${#temporals.format(transaction.date, 'MMM-dd-yy')}"
                     th:data-amount="${transaction.amount}"
                     th:data-transactionType="${transaction.transactionType.name}"
                     th:date-memo="${transaction.memo}"
