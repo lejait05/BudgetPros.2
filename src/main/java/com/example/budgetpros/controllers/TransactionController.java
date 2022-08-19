@@ -6,11 +6,10 @@ import com.example.budgetpros.repositories.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -31,18 +30,59 @@ public class TransactionController {
     }
 
     @GetMapping("/profile")
-    public String showTransactions(Model model){
-        List<Transaction> transactionList = transactionDao.findAll();
+    public String showTransactions(@RequestParam(required = false) String sortTransaction, Model model){
         model.addAttribute("transaction", new Transaction());
-        model.addAttribute("transactions", transactionList);
-        return "/profile";
-    }
 
-    @GetMapping("/transactions/{id}")
-    public String showTransaction(@PathVariable long id, Model model){
-        Transaction transaction = transactionDao.findById(id).get();
-        model.addAttribute("transaction", transaction);
-        return "profile/modal/show";
+        User user = usersDao.findById(1L).get();
+        model.addAttribute("user", user);
+
+//        function for extra sum
+        List<Transaction> extraSumList = transactionDao.findAll();
+        for(Transaction transaction: extraSumList){
+            if(transaction.getTransactionType().toString().equals("1") && !transaction.getBudgetCategories().getTitle().equals("none") || transaction.getTransactionType().toString().equals("3") && !transaction.getBudgetCategories().getTitle().equals("none")){
+                extraSumList.remove(transaction);
+                int extraSum = 0;
+                for(Transaction transaction2: extraSumList){
+                    extraSum += transaction2.getAmount();
+                }
+                model.addAttribute("extraSum", extraSum);
+            }
+
+        }
+
+
+//        function for budget sum
+        List<Transaction> budgetSumList = transactionDao.findAll();
+        budgetSumList.removeIf(transaction -> transaction.getBudgetCategories().getTitle().contains("none"));
+        int budgetSum = 0;
+        for(Transaction transaction: budgetSumList){
+            budgetSum += transaction.getAmount();
+        }
+        model.addAttribute("budgetSum", budgetSum);
+
+// Conditionals for the filter feature
+        if(sortTransaction == null){
+            List<Transaction> reverseList = transactionDao.findAll();
+            Collections.reverse(reverseList);
+            model.addAttribute("transactions", reverseList);
+        } else if(sortTransaction.equals("1")){
+            List<Transaction> reverseList = transactionDao.findAll();
+            Collections.reverse(reverseList);
+            model.addAttribute("transactions", reverseList);
+        } else if(sortTransaction.equals("2")){
+            List<Transaction> transactionList = transactionDao.findAll();
+            model.addAttribute("transactions", transactionList);
+        } else if(sortTransaction.equals("3")) {
+            List<Transaction> budgetList = transactionDao.findAll();
+            budgetList.removeIf(transaction -> transaction.getBudgetCategories().getTitle().contains("none"));
+            model.addAttribute("transactions", budgetList);
+        } else if(sortTransaction.equals("4")){
+            List<Transaction> goalList = transactionDao.findAll();
+            goalList.removeIf(transaction -> transaction.getGoal() == null);
+        model.addAttribute("transactions", goalList);
+        }
+
+        return "/profile";
     }
 
     @PostMapping("/transactions/create")

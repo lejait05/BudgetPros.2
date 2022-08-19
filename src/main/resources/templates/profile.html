@@ -24,20 +24,40 @@
     </div>
     <div class="col-md-9 col-sm-12 h-50">
         <div class="container">
-            <div class="border my-3 py-2"><h4 class="ms-3">Account Balance: $5000</h4></div>
-            <div class="border my-3 py-2"><h4 class="ms-3">Goals:</h4></div>
-            <div class="border my-3 py-2"><h4 class="ms-3">Spending Money: $1300</h4></div>
-            <div class="border my-3 py-2"><h4 class="ms-3">Budget Status: Amount / $2300</h4></div>
+            <div class="border mb-3 py-2"><h4 class="ms-3">Account Balance: $</h4></div>
+            <div class="border my-3 py-2">
+                <h4 class="ms-3">Goals:</h4>
+                <div th:each="goal: ${user.goals}">
+                    <div class="d-flex justify-content-between border p-1">
+                        <h5 th:text="${goal.title}"></h5>
+                        <h6>Current amount:$<span th:text="${goal.currentAmount}" ></span></h6>
+                        <h6>Goal amount:$<span th:text="${goal.goalAmount}"></span></h6>
+                        <h6>End date:<span th:text="${goal.endDate}"></span></h6>
+                    </div>
+                </div>
+            </div>
+            <div class="border my-3 py-2"><h4 class="ms-3">Budget Expenses: $<span th:text="${budgetSum}"></span></h4></div>
+            <div class="border my-3 py-2"><h4 class="ms-3">Extra Expenses: $<span th:text="${extraSum}"></span></h4></div>
         </div>
         <br>
         <div class="container d-flex justify-content-between">
-            <button id="filterbtn">Filter Transactions</button>
+           <div>
+               <form class="filterForm" th:action="@{/profile}" th:method="get">
+                   <select name="sortTransaction" id="sortTransaction">
+                       <option value="1">Newest to Oldest</option>
+                       <option value="2">Oldest to Newest</option>
+                       <option value="3">Budget Expenses</option>
+                       <option value="4">Goal Contributions</option>
+                   </select>
+                   <button class="filterbtn" >Filter</button>
+               </form>
+           </div>
             <h4>Transaction History</h4>
             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createModal">Add
                 Transaction
             </button>
         </div>
-        <div class="container mt-3" th:each="transaction: ${transactions}">
+        <div id="transactionList" class="container mt-3" th:each="transaction: ${transactions}">
             <div
                     th:data-id="${transaction.id}"
                     th:data-title="${transaction.title}"
@@ -55,12 +75,9 @@
         </div>
     </div>
 </div>
-<!--&lt;!&ndash; Button trigger modal &ndash;&gt;-->
-<!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
-<!--    Launch demo modal-->
-<!--</button>-->
 
-<!-- Modal -->
+<!-- Modal for creating transaction-->
+
 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -103,12 +120,11 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </form>
             </div>
-            <div class="modal-footer">
-
-            </div>
         </div>
     </div>
 </div>
+
+<!--Modal for individual transactions triggered by click on transaction event listener-->
 
 <div>
     <div class="modal" tabindex="-1">
@@ -167,7 +183,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -176,6 +191,7 @@
 <block th:replace="partials/partials.html :: scripts"></block>
 <script src="/jquery-3.6.0.js"></script>
 <script>
+<!--  event listener for individual modal  -->
     $(".transaction").click(function () {
         $(".modal").css("display", "block")
         $("#detailsForm").attr("action", "/transactions/" + $(this).data("id") + "/edit");
@@ -186,9 +202,12 @@
         $("#detailsTransactionType").attr("value", $(this).data("transactionType"))
         $("#detailsBudgetCategories").attr("value", $(this).data("budgetCategory"))
     })
+    //event listener to close individual transaction view modal
     $(".eventClose").click(function () {
-        $(".modal").css("display", "none")
+        $(".modal").css("display", "none");
     })
+
+
 </script>
 </body>
 </html>
