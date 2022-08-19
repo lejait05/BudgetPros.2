@@ -16,16 +16,10 @@ import java.util.List;
 public class TransactionController {
 
     private TransactionRepository transactionDao;
-    private Budget_CategoriesRepository budgetCategoriesDao;
-    private GoalsRepository goalsDao;
-    private TransactionTypesRepo transactionTypesDao;
     private UserRepository usersDao;
 
-    public TransactionController(TransactionRepository transactionDao, Budget_CategoriesRepository budgetCategoriesDao, GoalsRepository goalsDao, TransactionTypesRepo transactionTypesDao, UserRepository usersDao) {
+    public TransactionController(TransactionRepository transactionDao, UserRepository usersDao) {
         this.transactionDao = transactionDao;
-        this.budgetCategoriesDao = budgetCategoriesDao;
-        this.goalsDao = goalsDao;
-        this.transactionTypesDao = transactionTypesDao;
         this.usersDao = usersDao;
     }
 
@@ -39,17 +33,13 @@ public class TransactionController {
 //        function for extra sum
         List<Transaction> extraSumList = transactionDao.findAll();
         for(Transaction transaction: extraSumList){
-            if(transaction.getTransactionType().toString().equals("1") && !transaction.getBudgetCategories().getTitle().equals("none") || transaction.getTransactionType().toString().equals("3") && !transaction.getBudgetCategories().getTitle().equals("none")){
-                extraSumList.remove(transaction);
-                int extraSum = 0;
-                for(Transaction transaction2: extraSumList){
-                    extraSum += transaction2.getAmount();
-                }
-                model.addAttribute("extraSum", extraSum);
+            int extraSum = 0;
+            if(transaction.getTransactionType().getName().contains("one-time expense") && transaction.getBudgetCategories().getTitle().equals("none") || transaction.getTransactionType().getName().contains("recurring expense") && transaction.getBudgetCategories().getTitle().equals("none")){
+                extraSum += transaction.getAmount();
+
             }
-
+            model.addAttribute("extraSum", extraSum);
         }
-
 
 //        function for budget sum
         List<Transaction> budgetSumList = transactionDao.findAll();
@@ -59,6 +49,19 @@ public class TransactionController {
             budgetSum += transaction.getAmount();
         }
         model.addAttribute("budgetSum", budgetSum);
+
+//        Account balance feature
+        List<Transaction> accountBalanceList = transactionDao.findAll();
+        int accountBalance = 0;
+        for(Transaction transaction: accountBalanceList){
+            if(transaction.getTransactionType().getName().contains("one-time deposit") || transaction.getTransactionType().getName().contains("recurring income")){
+                accountBalance += transaction.getAmount();
+            } else if(transaction.getTransactionType().getName().contains("one-time expense") || transaction.getTransactionType().getName().contains("recurring expense")){
+                accountBalance -= transaction.getAmount();
+            }
+            model.addAttribute("accountBalance", accountBalance);
+        }
+
 
 // Conditionals for the filter feature
         if(sortTransaction == null){
@@ -100,12 +103,6 @@ public class TransactionController {
         return "redirect:/profile";
     }
 
-    @GetMapping("/transactions/{id}/edit")
-    public String editTransaction(@PathVariable long id, Model model){
-        Transaction transaction = transactionDao.findById(id).get();
-        model.addAttribute("transaction", transaction);
-        return "/profile";
-    }
 
     @PostMapping("/transactions/{id}/edit")
     public String submitEditTransaction(@ModelAttribute Transaction transaction){

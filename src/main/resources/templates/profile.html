@@ -1,36 +1,40 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 <head th:replace="partials/partials.html :: head('Profile')"></head>
 <body style="background-color: lightsteelblue">
 <header class=" d-none d-md-flex justify-content-between" style="background-color: steelblue">
     <div class=" ms-3 py-2 fs-2">BudgetPros</div>
-    <button class="h-50 me-3 mt-3">Currency Converter|V|</button>
+<!--    <button class="h-50 me-3 mt-3">Currency Converter|V|</button>-->
 </header>
 <div class="d-sm-block d-md-none">
     <nav th:replace="partials/partials.html :: nav"></nav>
 </div>
-<div class=" d-sm-block d-md-none ">
-    <button class="h-50 me-3 mt-3">Currency Converter|V|</button>
-</div>
+<!--<div class=" d-sm-block d-md-none ">-->
+<!--    <button class="h-50 me-3 mt-3">Currency Converter|V|</button>-->
+<!--</div>-->
 <br>
 <div class=" d-md-flex">
     <div class="d-none d-md-flex vh-100 col-md-2 col-sm-12">
         <nav class="mt-1 w-100" style="background-color: steelblue">
-            <div class="ms-3 fs-3 my-3">Username</div>
-            <div class="ms-3 mb-3"><a class="fs-3" href="/">Goals</a></div>
-            <div class="ms-3 mb-3"><a class="fs-3" href="/">About Us</a></div>
-            <div class="ms-3 mb-3"><a class="fs-3" href="/">Logout</a></div>
+            <div class="ms-3 fs-3 my-3 text-decoration-underline" th:text="${user.username}">Username</div>
+            <div class="ms-3 mb-3"><a class="nav-link fs-3" href="/home">Home</a></div>
+            <div class="ms-3 mb-3" sec:authorize="!isAuthenticated()"><a class="nav-link fs-3" href="/goals">Goals</a></div>
+            <div class="ms-3 mb-3" ><a class="nav-link fs-3" href="/about-us">About Us</a></div>
+            <div class="ms-2 mb-3" sec:authorize="isAuthenticated()">
+                <form th:action="@{/logout}" th:method="post">
+                <button class="border border-0 fs-3" style="background-color: steelblue">Logout</button>
+            </form></div>
         </nav>
     </div>
     <div class="col-md-9 col-sm-12 h-50">
         <div class="container">
-            <div class="border mb-3 py-2"><h4 class="ms-3">Account Balance: $</h4></div>
+            <div class="border mb-3 py-2"><h4 class="ms-3">Account Balance: $<span th:text="${accountBalance}"></span></h4></div>
             <div class="border my-3 py-2">
                 <h4 class="ms-3">Goals:</h4>
                 <div th:each="goal: ${user.goals}">
                     <div class="d-flex justify-content-between border p-1">
                         <h5 th:text="${goal.title}"></h5>
-                        <h6>Current amount:$<span th:text="${goal.currentAmount}" ></span></h6>
+                        <h6>Current amount:$<span th:text="${goal.currentAmount}"></span></h6>
                         <h6>Goal amount:$<span th:text="${goal.goalAmount}"></span></h6>
                         <h6>End date:<span th:text="${goal.endDate}"></span></h6>
                     </div>
