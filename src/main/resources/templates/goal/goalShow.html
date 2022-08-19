@@ -5,16 +5,86 @@
 <nav th:replace="partials/partials.html :: nav"></nav>
 <header th:replace="partials/partials.html :: header(${goal.title})"></header>
 <main class="container">
-    <p th:text="${goal.dateCreated}"></p>
-    <p class="text-center">Created by <span th:text="${goal.user.email}"></span></p>
-    <th:block sec:authorize="isAuthenticated()">
-        <div class="text-center" th:if="${#authentication.principal.id == goal.user.id}">
-            <a class="btn btn-outline-dark rounded" th:href="@{/goal/{id}/edit(id=${goal.id})}"><i class="bi bi-pencil"></i></a>
-            <form class="d-inline" th:action="@{/goal/{id}/delete/(id=${goal.id})}" th:method="POST">
-                <button id="delete-post-btn" class="btn btn-outline-danger rounded"><i class="bi bi-trash"></i></button>
-            </form>
-        </div>
-    </th:block>
+    <div>
+        <table>
+            <tr>
+                <td></td>
+                <td><label class="form-label" for="dateCreated">Start Saving On:</label></td>
+                <td><label class="form-label" for="endDate">Finish Saving By:</label></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <p th:text="*{goal.dateCreated}" class="text-center" id="dateCreated" value="" size="8"/></p>
+                </td>
+                <td>
+                    <p th:text="*{goal.endDate}" class="text-center" id="endDate" value=""
+                       size="8"/></p>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><label class="form-label" for="goalAmount">Total to be Saved:</label></td>
+                <td>
+                    <p th:text="*{goal.goalAmount}"  id="goalAmount" value="" size="8"/></p>
+                </td>
+                <td></td>
+                <td style="height:20px; width: 80px; background-color:#FFFFFF; border-top: solid 1px #D5E7A9; border-bottom: 0px; border-right: 0px; border-left: 0px; font-size: 13px; font-family:Verdana; color:#000000; text-align: left; ">
+                    Pie chart comparing total current savings to money yet to be saved is in this cell.
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+<!--            <tr>-->
+<!--                <td></td>-->
+<!--                <td><label class="form-label" for="preSaved">Prior Savings:></label></td>-->
+<!--                <td>-->
+<!--                    <p th:text="*{goal.preSaved}" onchange="calcule2()" id="preSaved" value="" size="8"/></p>-->
+<!--                </td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td></td>-->
+<!--                <td><label class="form-label" for="curGoal">Current Savings Goal:></label></td>-->
+<!--                <td>-->
+<!--                    <p th:text="*{goal.curGoal}" onchange="calcule2()" id="curGoal" value="" size="8"-->
+<!--                       disabled="disabled"></p>-->
+<!--                </td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--            </tr>-->
+
+        </table>
+        <!--    <p class="text-center">Created by <span th:text="${goal.user.email}"></span></p>-->
+        <th:block sec:authorize="isAuthenticated()">
+            <div class="text-center" th:if="${#authentication.principal.id == goal.user.id}">
+                <a class="btn btn-outline-dark rounded" th:href="@{/goal/{id}/edit(id=${goal.id})}"><i
+                        class="bi bi-pencil"></i></a>
+                <form class="d-inline" th:action="@{/goal/{id}/delete/(id=${goal.id})}" th:method="POST">
+                    <button id="delete-post-btn" class="btn btn-outline-danger rounded"><i class="bi bi-trash"></i>
+                    </button>
+                </form>
+            </div>
+        </th:block>
+    </div>
 </main>
 <th:block th:replace="partials/partials.html :: scripts"></th:block>
 </body>

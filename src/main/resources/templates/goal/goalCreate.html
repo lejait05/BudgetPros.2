@@ -18,14 +18,19 @@
             <label class="form-label" for="endDate">Finish Saving By:</label>
             <input type="date" name="endDate" id="endDate">
         </div>
-<div class="mb-3">
-    <label class="form-label" for="goalAmount">Total to Be Saved:</label>
-    <input class="form-control" type="text" th:field="*{goalAmount}" id="goalAmount">
-</div>
+        <div class="mb-3">
+            <label class="form-label" for="goalAmount">Total to Be Saved:</label>
+            <input class="form-control" type="text" th:field="*{goalAmount}" id="goalAmount">
+        </div>
+<!--        <div class="mb-3">-->
+<!--            <label class="form-label" for="preSaved">Prior Savings:></label>-->
+<!--            <input class="form-control" type="text" th:field="*{preSaved}" onchange="calcule2()" id="preSaved" value="" size="8"/> -->
+<!--        </div>-->
         <div class="d-grid">
-                <button>Submit</button>
-            </div>
+            <button>Submit</button>
+        </div>
     </form>
+    <th:block th:replace="partials/partials.html :: scripts"></th:block>
 </main>
 </body>
 </html>
