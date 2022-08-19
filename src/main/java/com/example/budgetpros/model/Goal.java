@@ -1,9 +1,11 @@
 package com.example.budgetpros.model;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -21,12 +23,12 @@ public class Goal {
     @Column(length = 100, nullable = false)
     private String title;
 
-    @Column(name = "dateCreated")
-    @CreationTimestamp
-    private LocalDateTime dateCreated;
+    @Column(length = 100, nullable = false)
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    private String dateCreated;
 
     @Column(length = 100, nullable = false)
-    private String dateCompleted;
+    private String endDate;
 
     @Column(columnDefinition = "INT", nullable = false)
     private int goalAmount;
@@ -40,22 +42,22 @@ public class Goal {
     public Goal() {
     }
 
-    public Goal(User user, String title, LocalDateTime dateCreated, String dateCompleted, int goalAmount, int currentAmount, List<Transaction> transactions) {
+    public Goal(User user, String title, String dateCreated, String endDate, int goalAmount, int currentAmount, List<Transaction> transactions) {
         this.user = user;
         this.title = title;
         this.dateCreated = dateCreated;
-        this.dateCompleted = dateCompleted;
+        this.endDate = endDate;
         this.goalAmount = goalAmount;
         this.currentAmount = currentAmount;
         this.transactions = transactions;
     }
 
-    public Goal(long id, User user, String title, LocalDateTime dateCreated, String dateCompleted, int goalAmount, int currentAmount, List<Transaction> transactions) {
+    public Goal(long id, User user, String title, String dateCreated, String endDate, int goalAmount, int currentAmount, List<Transaction> transactions) {
         this.id = id;
         this.user = user;
         this.title = title;
         this.dateCreated = dateCreated;
-        this.dateCompleted = dateCompleted;
+        this.endDate = endDate;
         this.goalAmount = goalAmount;
         this.currentAmount = currentAmount;
         this.transactions = transactions;
@@ -85,20 +87,20 @@ public class Goal {
         this.title = title;
     }
 
-    public LocalDateTime getDateCreated() {
+    public String getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(LocalDateTime dateCreated) {
+    public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public String getDateCompleted() {
-        return dateCompleted;
+    public String getEndDate() {
+        return endDate;
     }
 
-    public void setDateCompleted(String dateCompleted) {
-        this.dateCompleted = dateCompleted;
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     public int getGoalAmount() {
@@ -123,5 +125,19 @@ public class Goal {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
+    }
+
+    @Override
+    public String toString() {
+        return "Goal{" +
+                "id=" + id +
+                ", user=" + user +
+                ", title='" + title + '\'' +
+                ", dateCreated=" + dateCreated +
+                ", endDate='" + endDate + '\'' +
+                ", goalAmount=" + goalAmount +
+                ", currentAmount=" + currentAmount +
+                ", transactions=" + transactions +
+                '}';
     }
 }

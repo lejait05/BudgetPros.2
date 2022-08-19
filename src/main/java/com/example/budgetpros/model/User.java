@@ -33,9 +33,6 @@ public class User {
     private List<Transaction> transactions ;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Budget_Categories> budget_categories;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Goal> goals;
 
     public User() {
@@ -50,7 +47,7 @@ public class User {
         this.phone_number = phone_number;
     }
 
-    public User(long id, String username, String first_name, String last_name, String email, String password, long phone_number, List<Transaction> transactions, List<Budget_Categories> budget_categories, List<Goal> goals) {
+    public User(long id, String username, String first_name, String last_name, String email, String password, long phone_number, List<Transaction> transactions, List<Goal> goals) {
         this.id = id;
         this.username = username;
         this.first_name = first_name;
@@ -59,10 +56,15 @@ public class User {
         this.password = password;
         this.phone_number = phone_number;
         this.transactions = transactions;
-        this.budget_categories = budget_categories;
         this.goals = goals;
     }
 
+    public User(User copy) {
+        id = copy.id;
+        email = copy.email;
+        username = copy.username;
+        password = copy.password;
+    }
     public long getId() {
         return id;
     }
@@ -125,14 +127,6 @@ public class User {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
-    }
-
-    public List<Budget_Categories> getBudget_categories() {
-        return budget_categories;
-    }
-
-    public void setBudget_categories(List<Budget_Categories> budget_categories) {
-        this.budget_categories = budget_categories;
     }
 
     public List<Goal> getGoals() {

@@ -12,7 +12,6 @@ public class Transaction_Types {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
     @Column(length = 120, nullable = false)
     private String name;
 
