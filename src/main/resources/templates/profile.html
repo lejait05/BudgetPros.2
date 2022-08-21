@@ -121,6 +121,12 @@
                         <option value="8">groceries</option>
                     </select>
                     <hr>
+                    <label for="createGoal">Goal</label>
+                    <select th:field="*{goal}" name="goal" id="createGoal" th:each="goal: ${user.goals}">
+                        <option value="null">none</option>
+                        <option th:value="${goal.id}" th:text="${goal.title}"></option>
+                    </select>
+                    <hr>
                     <button class="btn btn-primary">Add Transaction</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </form>
@@ -170,6 +176,12 @@
                             <option value="6">water</option>
                             <option value="7">loan</option>
                             <option value="8">groceries</option>
+                        </select>
+                        <hr>
+                        <label for="detailsGoal">Goal</label>
+                        <select th:field="*{goal}" name="goal" id="detailsGoal" th:each="goal: ${user.goals}">
+                            <option value="null">none</option>
+                            <option value="" th:text="${goal.title}"></option>
                         </select>
                         <hr>
                         <div class="d-grid">

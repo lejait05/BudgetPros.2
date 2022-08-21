@@ -38,7 +38,7 @@
 <body>
 <nav th:replace="partials/partials.html :: nav"></nav>
 <div style="text-align: center">
-    <img src="/img/BudgetProsLogo.png"/>
+    <img  src="/images/budget.png" class="w-100" alt="log"/>
 <!--    <img  style="text-align: center;" th:src="@{img/Budgetpros.png}" >-->
 </div>
 <header th:replace="partials/partials.html :: header('Login')"></header>
@@ -58,5 +58,6 @@
         </div>
     </form>
 </main>
+<th:block th:replace="partials/partials.html :: scripts"></th:block>
 </body>
 </html>
