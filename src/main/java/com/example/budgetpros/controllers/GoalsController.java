@@ -61,7 +61,7 @@ public class GoalsController {
     public String showEditForm(@PathVariable long id, Model model) {
         Goal goalToEdit = goalsDao.findById(id).get();
         model.addAttribute("goalToEdit", goalToEdit);
-        return "goals/edit";
+        return "goal/goalEdit";
     }
 
     @PostMapping("/goals/{id}/edit")

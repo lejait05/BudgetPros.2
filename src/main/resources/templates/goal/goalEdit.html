@@ -10,9 +10,18 @@
             <label class="form-label" for="title">Title</label>
             <input th:field="*{title}" class="form-control" id="title" type="text" name="title" placeholder="Enter title here">
         </div>
+
         <div class="mb-3">
-            <label class="form-label" for="body">Body</label>
-            <textarea th:field="*{body}" class="form-control" id="body" name="body" placeholder="Enter body of text"></textarea>
+            <label class="form-label" for="dateCreated">Start Saving On:</label>
+            <input type="date" name="dateCreated" id="dateCreated">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="endDate">Finish Saving By:</label>
+            <input type="date" name="endDate" id="endDate">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="goalAmount">Total to Be Saved:</label>
+            <input class="form-control" type="text" th:field="*{goalAmount}" id="goalAmount">
         </div>
         <div class="d-grid">
             <button class="btn btn-dark btn-block">Update Post</button>
