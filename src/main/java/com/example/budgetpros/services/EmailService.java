@@ -26,7 +26,7 @@ public class EmailService {
 
     public void prepareAndSend(User user, String subject) {
         Email from = (new Email(sendgridEmail));
-        Email to = (new Email("christopher.aa.merritt@gmail.com"));
+        Email to = (new Email(user.getEmail()));
         String body = "Congratulations on creating a new BudgetPros account, " + user.getFirst_name() + " " + user.getLast_name() + " If this was not you please contact customer support.";
         Content content = new Content("text/plain", body);
         Mail mail = new Mail(from, subject, to, content);
