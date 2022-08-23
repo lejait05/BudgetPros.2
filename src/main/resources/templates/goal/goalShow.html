@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="partials/partials.html :: head('Goal Details')"></head>
+<head th:replace="partials/partials.html :: head('Goal Details')">
+
+</head>
 <body>
 <nav th:replace="partials/partials.html :: nav"></nav>
 <header th:replace="partials/partials.html :: header(${goal.title})"></header>
@@ -71,7 +73,114 @@
 <!--                <td></td>-->
 <!--                <td></td>-->
 <!--            </tr>-->
+<!--            <tr>-->
+<!--                <td></td>-->
+<!--                <td><label class="form-label" for="needSave">I still need to save:></label></td>-->
+<!--                <td><p th:field="*{needSave}" onchange="calcule2()" id="needSave" value="" size="8"-->
+<!--                       disabled="disabled"></p>-->
+<!--                </td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td></td>-->
+<!--                <td><h3>Savings Plan Details:></h3></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td></td>-->
+<!--                <td><h4 class="form-label" id="interval">Savings Interval></h4></td>-->
+<!--                <td><label class="form-label" for="daily">Daily></label></td>-->
+<!--                <td><label class="form-label" for="weekly">Weekly></label></td>-->
+<!--                <td><label class="form-label" for="biweekly">Bi-Weekly></label></td>-->
+<!--                <td><label class="form-label" for="monthly">Monthly></label></td>-->
+<!--                <td><label class="form-label" for="yearly">Yearly<></label></td>-->
+<!--                <td></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
 
+<!--                <td></td>-->
+<!--                <td><h4 class="form-label" id="amount">Amount to save:<></h4></td>-->
+<!--                <td>-->
+<!--                    <input th:field="*{daily}" onchange="calcule2()" id="daily" value="" size="8" disabled="disabled">-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input th:field="*{weekly}" onchange="calcule2()" id="weekly" value="" size="8" disabled="disabled">-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input th:field="*{biweekly}" onchange="calcule2()" id="biweekly" value="" size="8"-->
+<!--                           disabled="disabled">-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input th:field="*{monthly}" onchange="calcule2()" id="monthly" value="" size="8"-->
+<!--                           disabled="disabled">-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input th:field="*{yearly}" onchange="calcule2()" id="yearly" value="" size="8" disabled="disabled">-->
+<!--                </td>-->
+<!--                <td></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td></td>-->
+<!--                <td><h4 class="form-label" id="time">Time Interval:></h4></td>-->
+<!--                <td><label class="form-label" for="days">Days></label></td>-->
+<!--                <td><label class="form-label" for="weeks">Weeks></label></td>-->
+<!--                <td><label class="form-label" for="biweeks">Bi-Weeks></label></td>-->
+<!--                <td><label class="form-label" for="months">Months></label></td>-->
+<!--                <td><label class="form-label" for="years">Years></label></td>-->
+<!--                <td></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td></td>-->
+<!--                <td><h4 class="form-label" id="left">Time until goal is reached:></h4></td>-->
+<!--                <td>-->
+<!--                    <input th:field="*{days}" onchange="calcule2()" id="days" value="300" size="8" disabled="disabled">-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input th:field="*{weeks}" onchange="calcule2()" id="weeks" value="42.8571428571429" size="8"-->
+<!--                           disabled="disabled">-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input th:field="*{biweeks}" onchange="calcule2()" id="biweeks" value="21" size="8"-->
+<!--                           disabled="disabled">-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input th:field="*{months}" onchange="calcule2()" id="months" value="9" size="8"-->
+<!--                           disabled="disabled">-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input th:field="*{years}" onchange="calcule2()" id="years" value="0" size="8" disabled="disabled">-->
+<!--                </td>-->
+<!--                <td></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--            </tr>-->
         </table>
         <!--    <p class="text-center">Created by <span th:text="${goal.user.email}"></span></p>-->
         <th:block sec:authorize="isAuthenticated()">
