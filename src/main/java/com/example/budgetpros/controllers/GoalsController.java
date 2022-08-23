@@ -16,6 +16,7 @@ public class GoalsController {
     private GoalsRepository goalsDao;
     private UserRepository userDao;
 
+
     public GoalsController(GoalsRepository goalsDao, UserRepository userDao) {
         this.goalsDao = goalsDao;
         this.userDao = userDao;
@@ -25,7 +26,11 @@ public class GoalsController {
 
     @GetMapping("/goals")
     public String getGoals(Model model) {
-        List<Goal> goals = goalsDao.findAll();
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String name = principal.getUsername();
+        User user = userDao.findByUsername(name);
+        model.addAttribute("user", user);
+        List<Goal> goals = goalsDao.findByUserId(user.getId());
         model.addAttribute("goals", goals);
         return "/goal/goalIndex";
     }
@@ -52,5 +57,29 @@ public class GoalsController {
      goalsDao.save(newGoal);
         return "redirect:/goals";
     }
+    @GetMapping("/goals/{id}/edit")
+    public String showEditForm(@PathVariable long id, Model model) {
+        Goal goalToEdit = goalsDao.findById(id).get();
+        model.addAttribute("goalToEdit", goalToEdit);
+        return "goal/goalEdit";
+    }
 
+    @PostMapping("/goals/{id}/edit")
+    public String submitEditForm(@ModelAttribute Goal goalUpdates) {
+
+        Goal goalToUpdate = goalsDao.findById(goalUpdates.getId()).get();
+        goalToUpdate.setTitle(goalUpdates.getTitle());
+        goalToUpdate.setEndDate(goalUpdates.getEndDate());
+        goalToUpdate.setGoalAmount(goalUpdates.getGoalAmount());
+        goalsDao.save(goalToUpdate);
+        return "redirect:/goals";
+    }
+
+    @PostMapping("/goals/{id}/delete")
+    public String deletePost(@PathVariable long id) {
+        goalsDao.deleteById(id);
+        return "redirect:/goals";
+    }
 }
+
+

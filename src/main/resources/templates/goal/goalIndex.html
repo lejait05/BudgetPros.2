@@ -10,7 +10,7 @@
             <article class="card">
                 <div class="card-body">
                     <h3 th:text="'Goal: ' + ${goal.title}"></h3>
-                   <p>By <span th:text="${goal.user}"></span></p>
+                   <p>By <span th:text="${goal.user.getUsername()}"></span></p>
                     <p th:text="'Started '+ ${goal.dateCreated} "></p>
                     <p th:text="'Finish by ' + ${goal.endDate} "></p>
                     <p th:text=" 'Amount to Success: ' + ${goal.goalAmount}"></p>
@@ -18,8 +18,10 @@
                 </div>
             </article>
         </div>
+        <a th:href="@{/goals/create}">Create a New Goal</a>
     </div>
     <th:block th:replace="partials/partials.html :: scripts"></th:block>
 </main>
 </body>
 </html>
+

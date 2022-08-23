@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/partials.html :: head('Edit Goal')"></head>
+<body>
+<nav th:replace="partials/partials.html :: nav"></nav>
+<header th:replace="partials/partials.html :: header('Edit Goal')"></header>
+<main class="container">
+    <form th:action="@{/goal/{id}/edit (id = ${goalToEdit.id})}" th:method="POST" th:object="${goalToEdit}">
+        <div class="mb-3">
+            <label class="form-label" for="title">Title</label>
+            <input th:field="*{title}" class="form-control" id="title" type="text" name="title" placeholder="Enter title here">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="dateCreated">Start Saving On:</label>
+            <input type="date" name="dateCreated" id="dateCreated">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="endDate">Finish Saving By:</label>
+            <input type="date" name="endDate" id="endDate">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="goalAmount">Total to Be Saved:</label>
+            <input class="form-control" type="text" th:field="*{goalAmount}" id="goalAmount">
+        </div>
+        <div class="d-grid">
+            <button class="btn btn-dark btn-block">Update Post</button>
+        </div>
+    </form>
+    <th:block th:replace="partials/partials.html :: scripts"></th:block>
+</main>
+</body>
+</html>
