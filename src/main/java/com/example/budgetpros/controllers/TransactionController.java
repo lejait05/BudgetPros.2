@@ -115,7 +115,18 @@ public class TransactionController {
     }
 
     @PostMapping("/transactions/{id}/delete")
-    public String deleteTransaction(@PathVariable long id){
+    public String deleteTransaction(@PathVariable long id) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Transaction transaction = transactionDao.findById(id).get();
+        List<Goal> userGoals = goalsDao.findByUserId(user.getId());
+        if (transaction.getGoal() != null) {
+            for (Goal goal : userGoals) {
+                if (transaction.getGoal().getId() == goal.getId()) {
+                    int goalCurrent = transaction.getGoal().getCurrentAmount();
+                    goal.setCurrentAmount(0);
+                }
+            }
+        }
         transactionDao.deleteById(id);
         return "redirect:/profile";
     }
@@ -125,6 +136,23 @@ public class TransactionController {
     public String submitEditTransaction(@ModelAttribute Transaction transaction){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Transaction transactionToUpdate = transactionDao.findById(transaction.getId()).get();
+        List<Goal> userGoals = goalsDao.findByUserId(user.getId());
+        if(transactionToUpdate.getGoal() != transaction.getGoal()){
+            Long oldGoalId = transactionToUpdate.getGoal().getId();
+            Long goalId = transaction.getGoal().getId();
+            int oldAmount = (int) transactionToUpdate.getAmount();
+            int newAmount = (int) transaction.getAmount();
+            for(Goal goal: userGoals){
+                if(oldGoalId == goal.getId()){
+                    int goalCurrent = transactionToUpdate.getGoal().getCurrentAmount();
+                    goal.setCurrentAmount(goalCurrent - oldAmount);
+                }
+                if(goalId == goal.getId()){
+                    int goalNew = transaction.getGoal().getCurrentAmount();
+                    goal.setCurrentAmount(goalNew + newAmount);
+                }
+            }
+        }
         transactionToUpdate.setAmount(transaction.getAmount());
         transactionToUpdate.setTitle(transaction.getTitle());
         transactionToUpdate.setMemo(transaction.getMemo());
