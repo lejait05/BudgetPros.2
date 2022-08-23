@@ -1,5 +1,6 @@
 package com.example.budgetpros.controllers;
 
+import com.example.budgetpros.model.Goal;
 import com.example.budgetpros.model.Transaction;
 import com.example.budgetpros.model.User;
 import com.example.budgetpros.repositories.*;
@@ -17,10 +18,12 @@ public class TransactionController {
 
     private TransactionRepository transactionDao;
     private UserRepository usersDao;
+    private GoalsRepository goalsDao;
 
-    public TransactionController(TransactionRepository transactionDao, UserRepository usersDao) {
+    public TransactionController(TransactionRepository transactionDao, UserRepository usersDao, GoalsRepository goalsDao) {
         this.transactionDao = transactionDao;
         this.usersDao = usersDao;
+        this.goalsDao = goalsDao;
     }
 
     @GetMapping("/profile")
@@ -94,8 +97,20 @@ public class TransactionController {
     @PostMapping("/transactions/create")
     public String insertTransaction(@ModelAttribute Transaction transaction){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Goal> userGoals = goalsDao.findByUserId(user.getId());
+        Long goalId = transaction.getGoal().getId();
+        int transAmount = (int) transaction.getAmount();
         transaction.setUser(user);
+        if(transaction.getGoal() != null){
+           for(Goal goal: userGoals){
+               if(goalId == goal.getId()){
+                   int goalCurrent = goal.getCurrentAmount();
+                   goal.setCurrentAmount(goalCurrent + transAmount);
+               }
+           }
+        }
         transactionDao.save(transaction);
+
         return "redirect:/profile";
     }
 
