@@ -2,6 +2,7 @@ package com.example.budgetpros.controllers;
 
 import com.example.budgetpros.model.User;
 import com.example.budgetpros.repositories.UserRepository;
+import com.example.budgetpros.services.EmailService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +14,12 @@ public class UserController {
 
     private UserRepository userDao;
     private PasswordEncoder passwordEncoder;
-    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
+    private final EmailService emailService;
+
+    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
     @GetMapping("/sign-up")
@@ -29,6 +33,7 @@ public class UserController {
         String hash = passwordEncoder.encode(user.getPassword());
         user.setPassword(hash);
         userDao.save(user);
+        emailService.prepareAndSend(user, "Thank you for creating a new account!");
         return "redirect:/login";
     }
 }
