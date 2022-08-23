@@ -115,6 +115,7 @@ public class TransactionController {
         transactionToUpdate.setMemo(transaction.getMemo());
         transactionToUpdate.setTransactionType(transaction.getTransactionType());
         transactionToUpdate.setBudgetCategories(transaction.getBudgetCategories());
+        transactionToUpdate.setGoal((transaction.getGoal()));
         transaction.setUser(user);
         transactionDao.save(transactionToUpdate);
         return "redirect:/profile";

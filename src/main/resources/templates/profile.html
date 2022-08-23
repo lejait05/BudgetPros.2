@@ -71,6 +71,7 @@
                     th:data-transactionType="${transaction.transactionType.name}"
                     th:date-memo="${transaction.memo}"
                     th:data-budgetCategory="${transaction.budgetCategories}"
+                    th:data-goal="${transaction.goal}"
                     class="transaction d-flex justify-content-between border p-1">
                 <h5 th:text="${transaction.title}">Transaction Title</h5>
                 <h5 th:text="${#temporals.format(transaction.date, 'MMM-dd-yy')}">Date</h5>
@@ -122,9 +123,9 @@
                     </select>
                     <hr>
                     <label for="createGoal">Goal</label>
-                    <select th:field="*{goal}" name="goal" id="createGoal" th:each="goal: ${user.goals}">
+                    <select th:field="*{goal}" name="goal" id="createGoal" >
                         <option value="null">none</option>
-                        <option th:value="${goal.id}" th:text="${goal.title}"></option>
+                        <option th:each="goal: ${user.goals}" th:value="${goal.id}"><span th:text="${goal.title}"></span></option>
                     </select>
                     <hr>
                     <button class="btn btn-primary">Add Transaction</button>
@@ -178,10 +179,10 @@
                             <option value="8">groceries</option>
                         </select>
                         <hr>
-                        <label for="detailsGoal">Goal</label>
-                        <select th:field="*{goal}" name="goal" id="detailsGoal" th:each="goal: ${user.goals}">
+                        <label for="createGoal">Goal</label>
+                        <select th:field="*{goal}" name="goal" id="detailsGoal" >
                             <option value="null">none</option>
-                            <option value="" th:text="${goal.title}"></option>
+                            <option th:each="goal: ${user.goals}" th:value="${goal.id}"><span th:text="${goal.title}"></span></option>
                         </select>
                         <hr>
                         <div class="d-grid">
@@ -218,6 +219,8 @@
         $("#detailsMemo").attr("value", $(this).data("memo"))
         $("#detailsTransactionType").attr("value", $(this).data("transactionType"))
         $("#detailsBudgetCategories").attr("value", $(this).data("budgetCategory"))
+        $("#detailsGoal").attr("value", $(this).data("goal"))
+
     })
     //event listener to close individual transaction view modal
     $(".eventClose").click(function () {
