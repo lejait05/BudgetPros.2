@@ -226,5 +226,28 @@
 
 
 </script>
+<script src="/js/money.js"></script>
+<script>
+    // Load exchange rates data via AJAX:
+    $.get(
+        // NB: using Open Exchange Rates here, but you can use any source!
+        'https://openexchangerates.org/api/latest.json?app_id=' +
+        'ca1479de4d664ccbaee4c5616904d9cd',
+        function(data) {console.log(data)
+            // Check money.js has finished loading:
+            if ( typeof fx !== "undefined" && fx.rates ) {
+                fx.rates = data.rates;
+                fx.base = data.base;
+            } else {
+                // If not, apply to fxSetup global:
+                var fxSetup = {
+                    rates : data.rates,
+                    base : data.base
+                }
+            }
+            console.log(fx.convert(1, {from: 'USD', to: 'HKD'}))
+        }
+    );
+</script>
 </body>
 </html>
