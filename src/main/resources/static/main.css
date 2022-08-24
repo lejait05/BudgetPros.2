@@ -1,5 +1,9 @@
 body{
-    background: #507861;
+    background-image:  url("images/rolling.gif");
+    background-size: cover;
+    height: 100%;
+    /*overflow: hidden;*/
+
 }
 
 .modal{
