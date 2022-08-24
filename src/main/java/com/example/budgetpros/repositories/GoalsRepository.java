@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
+import java.util.List;
+
 public interface GoalsRepository extends JpaRepository<Goal, Long> {
     List<Goal> findByUserId(Long id);
 }
