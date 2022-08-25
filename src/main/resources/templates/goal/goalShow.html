@@ -22,11 +22,10 @@
             <tr>
                 <td></td>
                 <td>
-                    <p th:text="*{goal.dateCreated}" class="text-center" id="dateCreated" value="" size="8"/></p>
+                    <p th:text="*{goal.dateCreated}" class="text-center" id="dateCreated"></p>
                 </td>
                 <td>
-                    <p th:text="*{goal.endDate}" class="text-center" id="endDate" value=""
-                       size="8"/></p>
+                    <p th:text="*{goal.endDate}" class="text-center" id="endDate"></p>
                 </td>
                 <td></td>
                 <td></td>
@@ -36,13 +35,54 @@
             </tr>
             <tr>
                 <td></td>
-                <td><label class="form-label" for="goalAmount">Total to be Saved:</label></td>
+                <td><label class="form-label" for="goalAmount">Total to be Saved: $</label></td>
                 <td>
-                    <p th:text="*{goal.goalAmount}"  id="goalAmount" value="" size="8"/></p>
+                    <span th:text="${goal.goalAmount}" id="goalAmount"></span>
                 </td>
                 <td></td>
-                <td style="height:20px; width: 80px; background-color:#FFFFFF; border-top: solid 1px #D5E7A9; border-bottom: 0px; border-right: 0px; border-left: 0px; font-size: 13px; font-family:Verdana; color:#000000; text-align: left; ">
-                    Pie chart comparing total current savings to money yet to be saved is in this cell.
+                <td>
+<!--                    style="height:20px; width: 80px; background-color:#FFFFFF; border-top: solid 1px #D5E7A9; border-bottom: 0px; border-right: 0px; border-left: 0px; font-size: 13px; font-family:Verdana; color:#000000; text-align: left; ">-->
+                    <th:block sec:authorize="isAuthenticated()">
+                        <div class="text-center" th:if="${#authentication.principal.id == goal.user.id}">
+<script th:src="@{/profile.html}"></script>
+                            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                            <script type="text/javascript">
+
+
+                                window.onload = function () {
+
+                                    var chart = new CanvasJS.Chart("chartContainer", {
+                                        animationEnabled: true,
+                                        theme: "light2",
+                                        data: [
+                                            {
+                                                // Change type to "doughnut", "line", "splineArea", etc.
+                                                type: "pie",
+                                                dataPoints: [
+                                                    { label: "Current Amount Saved", y:30 },
+                                                    { label: "Still Need to Save" , y:70   }
+
+                                                ]
+                                            }
+                                        ]
+                                    });
+                                    chart.render();
+                                //     setTimeout(function () { updateChart() }, 1000);
+                                }
+                                // // function updateChart() {
+                                //     $.getJSON("/home/json?count=1&xStart="+ (dataPoints.length + 1) , function (data) {
+                                //         $.each(data, function (index) {
+                                //             dataPoints.push(data[index]);
+                                //         });
+                                //         chart.render();
+                                //         setTimeout(function () { updateChart() }, 1000);
+                                //     });
+                                // }
+                                //
+                                // });
+                            </script>
+                        </div>
+                    </th:block>  <div id="chartContainer" style="height: 300px; width: 100%;"></div>
                 </td>
                 <td></td>
                 <td></td>
