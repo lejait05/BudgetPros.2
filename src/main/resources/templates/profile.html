@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
-<head th:replace="partials/partials.html :: head('Profile')"></head>
-<body style="background-color: lightsteelblue">
-<header class=" d-none d-md-flex justify-content-between" style="background-color: steelblue">
-    <div class=" ms-3 py-2 fs-2">BudgetPros</div>
-<!--    <button class="h-50 me-3 mt-3">Currency Converter|V|</button>-->
+<head th:replace="partials/partials.html :: head('Profile')">
+    <style>
+        button{
+            border-radius: 50px 25px;
+        }
+    </style>
+</head>
+<body style="background-color: #FFFFFF">
+<header class=" d-none d-md-flex justify-content-between" style="background-color: midnightblue">
+    <div class=" ms-3 py-2 fs-2 text-light">BudgetPros</div>
+    <!--    <button class="h-50 me-3 mt-3">Currency Converter|V|</button>-->
 </header>
 <div class="d-sm-block d-md-none">
     <nav th:replace="partials/partials.html :: nav"></nav>
@@ -16,49 +22,49 @@
 <br>
 <div class=" d-md-flex">
     <div class="d-none d-md-flex vh-100 col-md-2 col-sm-12">
-        <nav class="mt-1 w-100" style="background-color: steelblue">
-            <div class="ms-3 fs-3 my-3 text-decoration-underline" th:text="${user.username}">Username</div>
-            <div class="ms-3 mb-3"><a class="nav-link fs-3" href="/home">Home</a></div>
-            <div class="ms-3 mb-3" sec:authorize="isAuthenticated()"><a class="nav-link fs-3" href="/goals">Goals</a></div>
-            <div class="ms-3 mb-3" ><a class="nav-link fs-3" href="/about-us">About Us</a></div>
+        <nav class="mt-1 w-100" style="background-color: midnightblue">
+            <div class="ms-3 fs-3 my-3 text-decoration-underline text-light" th:text="${user.username}">Username</div>
+            <div class="ms-3 mb-3"><a class="nav-link fs-3 text-light" href="/home">Home</a></div>
+            <div class="ms-3 mb-3" sec:authorize="isAuthenticated()"><a class="nav-link fs-3 text-light" href="/goals">Goals</a>
+            </div>
+            <div class="ms-3 mb-3"><a class="nav-link fs-3 text-light" href="/about-us">About Us</a></div>
             <div class="ms-2 mb-3" sec:authorize="isAuthenticated()">
                 <form th:action="@{/logout}" th:method="post">
-                <button class="border border-0 fs-3" style="background-color: steelblue">Logout</button>
-            </form></div>
+                    <button class="border border-0 fs-3 text-light" style="background-color: midnightblue">Logout</button>
+                </form>
+            </div>
         </nav>
     </div>
     <div class="col-md-9 col-sm-12 h-50">
         <div class="container">
-            <div class="border mb-3 py-2"><h4 class="ms-3">Account Balance: $<span th:text="${accountBalance}"></span></h4></div>
-            <div class="border my-3 py-2">
+            <div class="border mb-3 py-2"><h4 class="ms-3">Account Balance: $<span th:text="${accountBalance}"></span>
+            </h4></div>
+            <div class="border my-3 py-2 d-flex justify-content-between">
                 <h4 class="ms-3">Goals:</h4>
-                <div th:each="goal: ${user.goals}">
-                    <div class="d-flex justify-content-between border p-1">
-                        <h5 th:text="${goal.title}"></h5>
-                        <h6>Current amount:$<span th:text="${goal.currentAmount}"></span></h6>
-                        <h6>Goal amount:$<span th:text="${goal.goalAmount}"></span></h6>
-                        <h6>End date:<span th:text="${goal.endDate}"></span></h6>
-                    </div>
-                </div>
+                <button type="button" class="me-3" data-bs-toggle="modal" data-bs-target="#goalModal" style="border-radius: 50px 20px">
+                    View
+                </button>
             </div>
-            <div class="border my-3 py-2"><h4 class="ms-3">Budget Expenses: $<span th:text="${budgetSum}"></span></h4></div>
-            <div class="border my-3 py-2"><h4 class="ms-3">Extra Expenses: $<span th:text="${extraSum}"></span></h4></div>
+            <div class="border my-3 py-2"><h4 class="ms-3">Budget Expenses: $<span th:text="${budgetSum}"></span></h4>
+            </div>
+            <div class="border my-3 py-2"><h4 class="ms-3">Extra Expenses: $<span th:text="${extraSum}"></span></h4>
+            </div>
         </div>
         <br>
         <div class="container d-flex justify-content-between">
-           <div>
-               <form class="filterForm" th:action="@{/profile}" th:method="get">
-                   <select name="sortTransaction" id="sortTransaction">
-                       <option value="1">Newest to Oldest</option>
-                       <option value="2">Oldest to Newest</option>
-                       <option value="3">Budget Expenses</option>
-                       <option value="4">Goal Contributions</option>
-                   </select>
-                   <button class="filterbtn" >Filter</button>
-               </form>
-           </div>
+            <div>
+                <form class="filterForm" th:action="@{/profile}" th:method="get">
+                    <select name="sortTransaction" id="sortTransaction">
+                        <option value="1">Newest to Oldest</option>
+                        <option value="2">Oldest to Newest</option>
+                        <option value="3">Budget Expenses</option>
+                        <option value="4">Goal Contributions</option>
+                    </select>
+                    <button class="filterbtn">Filter</button>
+                </form>
+            </div>
             <h4>Transaction History</h4>
-            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createModal">Add
+            <button type="button" data-bs-toggle="modal" data-bs-target="#createModal">Add
                 Transaction
             </button>
         </div>
@@ -68,13 +74,14 @@
                     th:data-title="${transaction.title}"
                     th:data-date="${#temporals.format(transaction.date, 'MMM-dd-yy')}"
                     th:data-amount="${transaction.amount}"
-                    th:data-transactionType="${transaction.transactionType.name}"
-                    th:date-memo="${transaction.memo}"
-                    th:data-budgetCategory="${transaction.budgetCategories}"
+                    th:data-transactionType="${transaction.transactionType.id}"
+                    th:data-memo="${transaction.memo}"
+                    th:data-budgetCategory="${transaction.budgetCategories.id}"
+                    th:data-goal="${transaction.goal}"
                     class="transaction d-flex justify-content-between border p-1">
                 <h5 th:text="${transaction.title}">Transaction Title</h5>
                 <h5 th:text="${#temporals.format(transaction.date, 'MMM-dd-yy')}">Date</h5>
-                <h5 th:text="${transaction.amount}">$150.00</h5>
+                <h5>$<span th:text="${transaction.amount}"></span></h5>
                 <h5 th:text="${transaction.transactionType.name}">Transaction Type</h5>
             </div>
         </div>
@@ -122,14 +129,42 @@
                     </select>
                     <hr>
                     <label for="createGoal">Goal</label>
-                    <select th:field="*{goal}" name="goal" id="createGoal" th:each="goal: ${user.goals}">
+                    <select name="createGoal" id="createGoal">
                         <option value="null">none</option>
-                        <option th:value="${goal.id}" th:text="${goal.title}"></option>
+                        <option th:each="goal: ${user.goals}" th:value="${goal.id}"><span
+                                th:text="${goal.title}"></span></option>
                     </select>
                     <hr>
                     <button class="btn btn-primary">Add Transaction</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal for goal list view-->
+<div>
+    <div class="modal fade" id="goalModal" tabindex="-1" aria-labelledby="goalModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="goalModalLabel">Current Goals</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div th:each="goal: ${user.goals}">
+                        <div class="d-flex justify-content-between border p-1">
+                            <h5 th:text="${goal.title}"></h5>
+                            <h6>Current amount:$<span th:text="${goal.currentAmount}"></span></h6>
+                            <h6>Goal amount:$<span th:text="${goal.goalAmount}"></span></h6>
+                            <h6>End date:<span th:text="${goal.endDate}"></span></h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
@@ -160,10 +195,10 @@
                         <hr>
                         <label for="transactionType">Transaction Type</label>
                         <select th:field="*{transactionType}" name="transactionType" id="detailsTransactionType">
-                            <option value="1">one-time deposit</option>
-                            <option value="2">one-time expense</option>
-                            <option value="3">recurring income</option>
-                            <option value="4">recurring expense</option>
+                            <option  value="1">one-time deposit</option>
+                            <option  value="2">one-time expense</option>
+                            <option  value="3">recurring income</option>
+                            <option  value="4">recurring expense</option>
                         </select>
                         <hr>
                         <label for="budgetCategories">Budget Category</label>
@@ -179,45 +214,50 @@
                         </select>
                         <hr>
                         <label for="detailsGoal">Goal</label>
-                        <select th:field="*{goal}" name="goal" id="detailsGoal" th:each="goal: ${user.goals}">
+                        <select name="detailsGoal" id="detailsGoal">
                             <option value="null">none</option>
-                            <option value="" th:text="${goal.title}"></option>
+                            <option th:each="goal: ${user.goals}" th:value="${goal.id}"><span
+                                    th:text="${goal.title}"></span></option>
                         </select>
                         <hr>
                         <div class="d-grid">
                             <button class="btn btn-block btn-primary">Edit</button>
                         </div>
 
-                </form>
-                <div class="d-flex mt-2">
-                    <div>
-                        <button type="button" class="eventClose btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                    <div class="ms-auto">
-                        <form th:action="@{/transactions//delete}" th:method="post">
-                            <button id="deletebtn" class="btn btn-danger">Delete</button>
-                        </form>
+                    </form>
+                    <div class="d-flex mt-2">
+                        <div>
+                            <button type="button" class="eventClose btn btn-secondary" data-bs-dismiss="modal">Close
+                            </button>
+                        </div>
+                        <div class="ms-auto">
+                            <form th:action="@{/transactions//delete}" th:method="post">
+                                <button id="deletebtn" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
+
 
 <block th:replace="partials/partials.html :: scripts"></block>
 <script src="/jquery-3.6.0.js"></script>
 <script>
-<!--  event listener for individual modal  -->
+    <!--  event listener for individual modal  -->
     $(".transaction").click(function () {
         $(".modal").css("display", "block")
         $("#detailsForm").attr("action", "/transactions/" + $(this).data("id") + "/edit");
         $("#deletebtn").parent().attr("action", "/transactions/" + $(this).data("id") + "/delete")
         $("#detailsTitle").attr("value", $(this).data("title"))
         $("#detailsAmount").attr("value", $(this).data("amount"))
-        $("#detailsMemo").attr("value", $(this).data("memo"))
-        $("#detailsTransactionType").attr("value", $(this).data("transactionType"))
-        $("#detailsBudgetCategories").attr("value", $(this).data("budgetCategory"))
+        $("#detailsMemo").val($(this).data("memo"))
+        $("#detailsTransactionType").val($(this).data("transactiontype"))
+        $("#detailsBudgetCategories").val($(this).data("budgetcategory"))
+        $("#detailsGoal").attr("value", $(this).data("goal"))
+
     })
     //event listener to close individual transaction view modal
     $(".eventClose").click(function () {
