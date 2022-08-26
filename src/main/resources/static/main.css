@@ -1,5 +1,6 @@
 body{
-    background-image:  url("images/rolling.gif");
+    background: linear-gradient(45deg,#C1B19A, white);
+    list-style-image: url("/img/Budgetlogo3.png");
     background-size: cover;
     height: 100%;
     /*overflow: hidden;*/
@@ -8,4 +9,53 @@ body{
 
 .modal{
     display: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin: 0 10px;
+}
+
+.nav-link {
+    text-decoration: none;
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0px;
+    border-radius: 2px;
+    background-color: darkred;
+    transition: 0.4s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.mainnav {
+    background-color: #0C3666;
+    border-bottom: 2px solid #FF0001;
+}
+
+.login {
+    position: relative;
+    max-width: 65%;
+    margin: auto;
+    border-radius: 100%;
+}
+
+.card {
+    position: center;
+}
+
+.card-img-bottom {
+    background-size: contain;
 }
