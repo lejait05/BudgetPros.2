@@ -121,3 +121,15 @@ body{
     height: 320px;
     width: 370px;
 }
+
+.fst-italic {
+    color: #CF9D11;
+}
+
+.mb-5 {
+    color: #CF9D11;
+}
+
+.blockquote-footer {
+    color: #CF9D11;
+}
