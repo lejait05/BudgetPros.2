@@ -4,13 +4,13 @@
 <body>
 <nav class="logNav" th:replace="partials/partials.html :: nav"></nav>
 
-<main style="text-align: center; justify-content: center" class="container">
+<main style="text-align: center; justify-content: center">
     <div class="container">
-        <div class="row" >
+        <div class="row">
             <div class="col-lg-10 col-xl-9 mx-auto">
                 <div class="card-body" style="flex-direction: column; align-items: center">
-                    <div class="card-img-top" >
-                        <img src="/img/budget-pros-edit.jpeg" alt="logo"/>
+                    <div class="card-img-top mt-2">
+                        <img class="image" src="/img/2AC79737-AC89-4A25-AB6D-8CC22070C467.PNG" alt="logo"/>
                     </div>
                     <div class="logInput ">
                         <header th:replace="partials/partials.html :: header('Login')"></header>
@@ -25,7 +25,7 @@
                                 <input class="form-control" id="password" name="password" type="password"
                                        placeholder="Enter password"/>
                             </div>
-                            <div class="d-grid mt-3">
+                            <div class="d-grid my-3">
                                 <button class="btn btn-dark">Log In</button>
                             </div>
                         </form>
