@@ -9,22 +9,10 @@
 <header class=" d-none d-md-flex justify-content-between">
     <div class=" ms-4 py-2 fs-1 text-light">BudgetPros</div>
 
-    <select name="currency-conversion" id="currency-conversion">
-        <option value="usd">&#36;USD</option>
-        <option value="gbp">&#163;GBP</option>
-        <option value="eur">&#128;EUR</option>
-        <option value="cny">&#22278;CNY</option>
-        <option value="jpy">&#165;JPY</option>
-        <option value="hkd">&#22291;HKD</option>
-    </select>
-
 </header>
 <div class="d-sm-block d-md-none">
     <nav th:replace="partials/partials.html :: nav"></nav>
 </div>
-<!--<div class=" d-sm-block d-md-none ">-->
-<!--    <button class="h-50 me-3 mt-3">Currency Converter|V|</button>-->
-<!--</div>-->
 <div class=" d-md-flex">
 
     <div class="d-none d-md-flex vh-100 col-md-2 ">
@@ -47,8 +35,17 @@
 
     <div class="container-fluid col-sm-12 col-md-10 h-50 pt-3 profileDisplay">
         <div class="container displayBlock">
-            <div class="mb-2 mt-3 py-1"><h4 class="ms-3 mb-0">Account Balance: <span id="accountBalance" th:text="${accountBalance}"></span>
-            </h4></div>
+            <div class="d-flex justify-content-between mb-2 mt-3 py-1">
+                <h4 class="ms-3 mb-0">Account Balance: <span id="accountBalance" th:text="${accountBalance}"></span></h4>
+                <select class=" py-2 me-2 border-0" name="currency-conversion" id="currency-conversion" >
+                    <option value="usd">&#36;USD</option>
+                    <option value="gbp">&#163;GBP</option>
+                    <option value="eur">&#128;EUR</option>
+                    <option value="cny">&#22278;CNY</option>
+                    <option value="jpy">&#165;JPY</option>
+                    <option value="hkd">&#22291;HKD</option>
+                </select>
+            </div>
             <hr>
             <div class="my-2 py-1 d-flex justify-content-between">
                 <h4 class="ms-3 mb-0">Goals:</h4>
@@ -79,7 +76,7 @@
             </div>
 
             <h4>Transaction History</h4>
-            <button type="button" data-bs-toggle="modal" data-bs-target="#createModal">Add
+            <button class="bstyle" type="button" data-bs-toggle="modal" data-bs-target="#createModal">Add
                 Transaction
             </button>
         </div>
@@ -96,7 +93,8 @@
                         th:data-goalid="${(transaction.goal != null) ? transaction.goal.id : 'null'}"
                         class="transaction d-flex p-1">
                     <h5 class=" text-center w-25" th:text="${transaction.title}">Transaction Title</h5>
-                    <h5 class=" text-center w-25" th:text="${#temporals.format(transaction.date, 'MMM-dd-yy')}">Date</h5>
+                    <h5 class=" text-center w-25" th:text="${#temporals.format(transaction.date, 'MMM-dd-yy')}">
+                        Date</h5>
                     <h5 class=" text-center w-25">$<span th:text="${transaction.amount}"></span></h5>
                     <h5 class=" text-center w-25" th:text="${transaction.transactionType.name}">Transaction Type</h5>
                 </div>
@@ -113,7 +111,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title text-light" id="createModalLabel">New Transaction</h5>
-                <button type="button" class="btn-close btn btn-outline-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn btn-outline-danger" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form th:action="@{/transactions/create}" th:method="post" th:object="${transaction}">
@@ -169,7 +168,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title text-light" id="goalModalLabel">Current Goals</h5>
-                    <button type="button" class="btn-close btn btn-outline-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn btn-outline-danger" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
 
                 </div>
                 <div class="modal-body">
@@ -217,10 +217,10 @@
                         <hr>
                         <label for="transactionType">Transaction Type</label>
                         <select th:field="*{transactionType}" name="transactionType" id="detailsTransactionType">
-                            <option  value="1">one-time deposit</option>
-                            <option  value="2">one-time expense</option>
-                            <option  value="3">recurring income</option>
-                            <option  value="4">recurring expense</option>
+                            <option value="1">one-time deposit</option>
+                            <option value="2">one-time expense</option>
+                            <option value="3">recurring income</option>
+                            <option value="4">recurring expense</option>
                         </select>
                         <hr>
                         <label for="budgetCategories">Budget Category</label>
@@ -265,11 +265,6 @@
 </div>
 
 
-
-
-
-
-
 <block th:replace="partials/partials.html :: scripts"></block>
 <script src="/jquery-3.6.0.js"></script>
 <script>
@@ -300,16 +295,17 @@
     $.get(
         // NB: using Open Exchange Rates here, but you can use any source!
         'https://openexchangerates.org/api/latest.json?app_id=ca1479de4d664ccbaee4c5616904d9cd',
-        function(data) {console.log(data)
+        function (data) {
+            console.log(data)
             // Check money.js has finished loading:
-            if ( typeof fx !== "undefined" && fx.rates ) {
+            if (typeof fx !== "undefined" && fx.rates) {
                 fx.rates = data.rates;
                 fx.base = data.base;
             } else {
                 // If not, apply to fxSetup global:
                 var fxSetup = {
-                    rates : data.rates,
-                    base : data.base
+                    rates: data.rates,
+                    base: data.base
                 }
             }
             // console.log(parseFloat($(".accountBalance").text()))
@@ -317,33 +313,34 @@
             // console.log(fx.convert(((parseFloat($(".accountBalance").text()))), {from: 'USD', to: 'HKD'}))
             // console.log(fx.convert(1, {from: 'USD', to: 'HKD'}))
         }
-
     );
-    $("#accountBalance").click(function(){
+    $("#accountBalance").click(function () {
         fx.convert(((parseFloat($("#accountBalance").text()))), {from: '', to: ''});
     });
     $("#currency-conversion").on('focus', function () {
         // Store the current value on focus and on change
         previous = $(this).val().toUpperCase()
-    }).change(function() {
+    }).change(function () {
         // alert(fx.convert(((parseFloat($("#accountBalance").text()))), {from: 'USD', to: $(this).val().toUpperCase()}));\
         // alert(previous)
         $(this).val().toUpperCase()
         var updated_value;
         // var regExp = /[a-zA-Z]/g;
         if (($("#accountBalance").text())) {
-            $('#currency-conversion').mouseover(function() {
+            $('#currency-conversion').mouseover(function () {
                 location.reload();
             });
             // alert('here')
-            var temp = $("#accountBalance").text().replace( /^\D+/g, '');
+            var temp = $("#accountBalance").text().replace(/^\D+/g, '');
             // alert(temp)
             updated_value = fx.convert(parseFloat(temp), {from: previous, to: $(this).val().toUpperCase()})
+        } else {
+            updated_value = fx.convert(((parseFloat($("#accountBalance").text()))), {
+                from: previous,
+                to: $(this).val().toUpperCase()
+            })
         }
-        else {
-            updated_value = fx.convert(((parseFloat($("#accountBalance").text()))), {from: previous, to: $(this).val().toUpperCase()})
-        }
-        var currency_value = $( "#currency-conversion option:selected" ).text()
+        var currency_value = $("#currency-conversion option:selected").text()
         // alert(currency_value)
         // alert(updated_value)
         $("#accountBalance").text(currency_value + updated_value);

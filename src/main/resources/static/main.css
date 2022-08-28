@@ -22,7 +22,7 @@ body{
 }
 
 .profileDisplay{
-    background-color: #C1B19A;
+    background: linear-gradient(45deg,#C1B19A, white);
     border-left: 2px solid #FF0001;
     border-top:2px solid #FF0001;
     border-bottom:2px solid #FF0001;
