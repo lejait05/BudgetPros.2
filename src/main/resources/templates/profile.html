@@ -75,12 +75,12 @@
                 </form>
             </div>
 
-            <h4>Transaction History</h4>
+            <h4 class="text-light" >Transaction History</h4>
             <button class="bstyle" type="button" data-bs-toggle="modal" data-bs-target="#createModal">Add
                 Transaction
             </button>
         </div>
-        <div class="container listBlock mb-5">
+        <div class="container listBlock mb-4">
             <div id="transactionList" class=" mt-3" th:each="transaction: ${transactions}">
                 <div
                         th:data-id="${transaction.id}"
