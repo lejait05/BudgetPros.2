@@ -13,52 +13,38 @@ body{
 }
 
 .bstyle{
-    border-radius: 20px;
-}
-
-.backStyle{
-    background-color: #0C3666;
-    background-image: none;
-    font-family: 'Tajawal', sans-serif;
-}
-
-.profileDisplay{
-    background: linear-gradient(45deg,#C1B19A, white);
-    border-left: 2px solid #FF0001;
-    border-top:2px solid #FF0001;
-    border-bottom:2px solid #FF0001;
+    border-radius: 5px;
 }
 
 .transactionBlock{
     background-color: #0C3666;
     text-decoration-color: #FFFFFF;
     height: 50px;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
+    border-bottom: #FF0001 2px solid;
+
 }
 
 .displayBlock{
     border: 1px solid black;
     background-color: #FFFFFF;
-    border-radius: 25px;
+
 }
 
 .listBlock{
     border: 1px solid black;
     background-color: #FFFFFF;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
+
 }
 
 .filterForm{
-    border-bottom-left-radius: 25px;
-    border-top-left-radius: 25px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
     height: 30px;
 }
 
 .filterbtn{
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .transaction{
@@ -101,6 +87,7 @@ body{
 .mainnav {
     background-color: #0C3666;
     border-bottom: 2px solid #FF0001;
+    font-family: 'Tajawal', sans-serif;
 }
 
 .login {
@@ -134,3 +121,4 @@ body{
 .blockquote-footer {
     color: #CF9D11;
 }
+
