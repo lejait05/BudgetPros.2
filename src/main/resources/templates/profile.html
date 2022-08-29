@@ -2,81 +2,66 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 
-
 <head th:replace="partials/partials.html :: head(${user.username})"></head>
 
 <body class="backStyle">
-<header class=" d-none d-md-flex justify-content-between">
-    <div class=" ms-4 py-2 fs-1 text-light">BudgetPros</div>
+<nav th:replace="partials/partials.html :: nav"></nav>
+<header th:replace="partials/partials.html :: header('My Account')"></header>
 
-</header>
-<div class="d-sm-block d-md-none">
-    <nav th:replace="partials/partials.html :: nav"></nav>
-</div>
 <div class=" d-md-flex">
 
-    <div class="d-none d-md-flex vh-100 col-md-2 ">
-        <nav class="mt-1 w-100">
-            <div class="ms-4 fs-2 my-3 text-decoration-underline text-light" th:text="${user.username}">Username</div>
-            <div class="ms-4 mb-3"><a class="nav-link fs-2 text-light" href="/home">Home</a></div>
-            <div class="ms-4 mb-3" sec:authorize="isAuthenticated()"><a class="nav-link fs-2 text-light" href="/goals">Goals</a>
+    <div class="col-sm-12 d-md-flex col-md-4 pt-3">
+        <div class="container w-100">
+            <div class="container pt-3 transactionBlock">
+                <h4 class="text-light text-center mb-0">Account Summary</h4>
             </div>
-            <div class="ms-4 mb-3"><a class="nav-link fs-2 text-light" href="/about-us">About Us</a></div>
-            <div class="ms-3 mb-3" sec:authorize="isAuthenticated()">
-                <form th:action="@{/logout}" th:method="post">
-                    <button class="border border-0 fs-2 text-light" style="background-color: #0C3666">Logout
+            <div class="container listBlock pt-3">
+                <div class="d-flex justify-content-between mb-2 mt-3 py-1">
+                    <h4 class="ms-3 mb-0">Account Balance: <span id="accountBalance" th:text="${accountBalance}"></span>
+                    </h4>
+                    <select class=" py-2 me-2 border-0" name="currency-conversion" id="currency-conversion">
+                        <option value="usd">&#36;USD</option>
+                        <option value="gbp">&#163;GBP</option>
+                        <option value="eur">&#128;EUR</option>
+                        <option value="cny">&#22278;CNY</option>
+                        <option value="jpy">&#165;JPY</option>
+                        <option value="hkd">&#22291;HKD</option>
+                    </select>
+                </div>
+                <hr>
+                <div class="my-2 py-1 d-flex justify-content-between">
+                    <h4 class="ms-3 mb-0">Goals:</h4>
+                    <button type="button " class="me-3 bstyle pt-1" data-bs-toggle="modal" data-bs-target="#goalModal">
+                        View
                     </button>
-
-                </form>
-            </div>
-        </nav>
-    </div>
-
-
-    <div class="container-fluid col-sm-12 col-md-10 h-50 pt-3 profileDisplay">
-        <div class="container displayBlock">
-            <div class="d-flex justify-content-between mb-2 mt-3 py-1">
-                <h4 class="ms-3 mb-0">Account Balance: <span id="accountBalance" th:text="${accountBalance}"></span></h4>
-                <select class=" py-2 me-2 border-0" name="currency-conversion" id="currency-conversion" >
-                    <option value="usd">&#36;USD</option>
-                    <option value="gbp">&#163;GBP</option>
-                    <option value="eur">&#128;EUR</option>
-                    <option value="cny">&#22278;CNY</option>
-                    <option value="jpy">&#165;JPY</option>
-                    <option value="hkd">&#22291;HKD</option>
-                </select>
-            </div>
-            <hr>
-            <div class="my-2 py-1 d-flex justify-content-between">
-                <h4 class="ms-3 mb-0">Goals:</h4>
-                <button type="button" class="me-3 bstyle" data-bs-toggle="modal" data-bs-target="#goalModal">
-                    View
-                </button>
-            </div>
-            <hr>
-            <div class="my-2 py-1"><h4 class="ms-3 mb-0">Budget Expenses: $<span th:text="${budgetSum}"></span></h4>
-            </div>
-            <hr>
-            <div class="my-2 py-1"><h4 class="ms-3 mb-0">Extra Expenses: $<span th:text="${extraSum}"></span></h4>
+                </div>
+                <hr>
+                <div class="my-2 py-1"><h4 class="ms-3 mb-0">Budget Expenses: $<span th:text="${budgetSum}"></span></h4>
+                </div>
+                <hr>
+                <div class="my-2 py-1"><h4 class="ms-3 mb-0">Extra Expenses: $<span th:text="${extraSum}"></span></h4>
+                </div>
             </div>
         </div>
-        <br>
+    </div>
+
+    <div class="container-fluid col-sm-12 col-md-8 h-50 pt-3 ">
         <div class="container d-flex justify-content-between align-items-baseline pt-2 transactionBlock">
             <div class="align-content-center">
                 <form th:action="@{/profile}" th:method="get">
-                    <select class="filterForm" name="sortTransaction" id="sortTransaction">
+                    <select class="filterForm pt-1" name="sortTransaction" id="sortTransaction">
 
                         <option value="1">Newest to Oldest</option>
                         <option value="2">Oldest to Newest</option>
                         <option value="3">Budget Expenses</option>
                         <option value="4">Goal Contributions</option>
                     </select>
-                    <button class="filterbtn">Filter</button>
+                    <button class="filterbtn pt-1">Filter</button>
                 </form>
             </div>
 
-            <h4 class="text-light" >Transaction History</h4>
-            <button class="bstyle" type="button" data-bs-toggle="modal" data-bs-target="#createModal">Add
+            <h4 class="text-light pt-1">Transaction History</h4>
+            <button class="bstyle pt-1" type="button" data-bs-toggle="modal" data-bs-target="#createModal">Add
                 Transaction
             </button>
         </div>
@@ -117,16 +102,16 @@
             <div class="modal-body">
                 <form th:action="@{/transactions/create}" th:method="post" th:object="${transaction}">
                     <label for="title">Title</label>
-                    <input th:field="*{title}" type="text" id="title" name="title" placeholder="Enter Title">
+                    <input class="form-control" th:field="*{title}" type="text" id="title" name="title" placeholder="Enter Title">
                     <hr>
                     <label for="amount">Amount</label>
-                    <input th:field="*{amount}" type="number" step="any" id="amount" name="amount" placeholder="$0.00">
+                    <input class="form-control" th:field="*{amount}" type="number" step="any" id="amount" name="amount" placeholder="$0.00">
                     <hr>
                     <label for="memo">Transaction Details</label>
-                    <textarea th:field="*{memo}" name="memo" id="memo" placeholder="Transaction Details"></textarea>
+                    <textarea class="form-control" th:field="*{memo}" name="memo" id="memo" placeholder="Transaction Details"></textarea>
                     <hr>
                     <label for="transactionType">Transaction Type</label>
-                    <select th:field="*{transactionType}" name="transactionType" id="transactionType">
+                    <select class="form-select" th:field="*{transactionType}" name="transactionType" id="transactionType">
                         <option value="1">one-time deposit</option>
                         <option value="2">one-time expense</option>
                         <option value="3">recurring income</option>
@@ -134,7 +119,7 @@
                     </select>
                     <hr>
                     <label for="budgetCategories">Budget Category</label>
-                    <select th:field="*{budgetCategories}" name="budgetCategories" id="budgetCategories">
+                    <select class="form-select" th:field="*{budgetCategories}" name="budgetCategories" id="budgetCategories">
                         <option value="1">none</option>
                         <option value="2">electrical</option>
                         <option value="3">mortgage</option>
@@ -146,7 +131,7 @@
                     </select>
                     <hr>
                     <label for="createGoal">Goal</label>
-                    <select name="createGoal" id="createGoal">
+                    <select class="form-select" name="createGoal" id="createGoal">
                         <option value="null">none</option>
                         <option th:each="goal: ${user.goals}" th:value="${goal.id}"><span
                                 th:text="${goal.title}"></span></option>
@@ -167,19 +152,25 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title text-light" id="goalModalLabel">Current Goals</h5>
+                    <h5 class="modal-title text-light fs-3" id="goalModalLabel">Current Goals</h5>
                     <button type="button" class="btn-close btn btn-outline-danger" data-bs-dismiss="modal"
                             aria-label="Close"></button>
 
                 </div>
                 <div class="modal-body">
+                    <div class="d-flex justify-content-between border p-1">
+                        <h4 class="w-25 text-center fw-bold text-decoration-underline">Goal Title</h4>
+                        <h4 class="w-25 text-center fw-bold text-decoration-underline">Current Amount</h4>
+                        <h4 class="w-25 text-center fw-bold text-decoration-underline">Goal Amount</h4>
+                        <h4 class="w-25 text-center fw-bold text-decoration-underline">End Date</h4>
+                    </div>
                     <div th:each="goal: ${user.goals}">
                         <div class="d-flex justify-content-between border p-1">
 
-                            <h5 class="w-25" th:text="${goal.title}"></h5>
-                            <h6 class="w-25">Current amount:$<span th:text="${goal.currentAmount}"></span></h6>
-                            <h6 class="w-25">Goal amount:$<span th:text="${goal.goalAmount}"></span></h6>
-                            <h6 class="w-25">End date:<span th:text="${goal.endDate}"></span></h6>
+                            <h5 class="w-25 text-center" th:text="${goal.title}"></h5>
+                            <h6 class="w-25 text-center">$<span th:text="${goal.currentAmount}"></span></h6>
+                            <h6 class="w-25 text-center">$<span th:text="${goal.goalAmount}"></span></h6>
+                            <h6 class="w-25 text-center"><span th:text="${goal.endDate}"></span></h6>
 
                         </div>
                     </div>
@@ -207,16 +198,16 @@
                     <form id="detailsForm" th:action="@{/transactions//edit}" th:method="post"
                           th:object="${transaction}">
                         <label for="title">Title</label>
-                        <input th:field="*{title}" type="text" id="detailsTitle" name="title">
+                        <input class="form-control" th:field="*{title}" type="text" id="detailsTitle" name="title">
                         <hr>
                         <label for="amount">Amount</label>
-                        <input th:field="*{amount}" type="number" step="any" id="detailsAmount" name="amount">
+                        <input class="form-control" th:field="*{amount}" type="number" step="any" id="detailsAmount" name="amount">
                         <hr>
                         <label for="memo">Transaction Details</label>
-                        <textarea th:field="*{memo}" name="memo" id="detailsMemo"></textarea>
+                        <textarea class="form-control" th:field="*{memo}" name="memo" id="detailsMemo"></textarea>
                         <hr>
                         <label for="transactionType">Transaction Type</label>
-                        <select th:field="*{transactionType}" name="transactionType" id="detailsTransactionType">
+                        <select class="form-select" th:field="*{transactionType}" name="transactionType" id="detailsTransactionType">
                             <option value="1">one-time deposit</option>
                             <option value="2">one-time expense</option>
                             <option value="3">recurring income</option>
@@ -224,7 +215,7 @@
                         </select>
                         <hr>
                         <label for="budgetCategories">Budget Category</label>
-                        <select th:field="*{budgetCategories}" name="budgetCategories" id="detailsBudgetCategories">
+                        <select class="form-select" th:field="*{budgetCategories}" name="budgetCategories" id="detailsBudgetCategories">
                             <option value="1">none</option>
                             <option value="2">electrical</option>
                             <option value="3">mortgage</option>
@@ -236,7 +227,7 @@
                         </select>
                         <hr>
                         <label for="detailsGoal">Goal</label>
-                        <select name="detailsGoal" id="detailsGoal">
+                        <select class="form-select" name="detailsGoal" id="detailsGoal">
                             <option value="null">none</option>
                             <option th:each="goal: ${user.goals}" th:value="${goal.id}"><span
                                     th:text="${goal.title}"></span></option>
