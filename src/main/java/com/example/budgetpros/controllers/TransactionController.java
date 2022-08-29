@@ -115,7 +115,7 @@ public class TransactionController {
         transaction.setUser(user);
         transactionDao.save(transaction);
 
-        return "redirect:profile";
+        return "redirect:/profile";
     }
 
     @PostMapping("/transactions/{id}/delete")
@@ -133,7 +133,7 @@ public class TransactionController {
             }
         }
         transactionDao.deleteById(id);
-        return "redirect:profile";
+        return "redirect:/profile";
     }
 
 
@@ -175,6 +175,6 @@ public class TransactionController {
         transactionToUpdate.setBudgetCategories(transaction.getBudgetCategories());
         transaction.setUser(user);
         transactionDao.save(transactionToUpdate);
-        return "redirect:profile";
+        return "redirect:/profile";
     }
 }
