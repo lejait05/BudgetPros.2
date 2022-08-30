@@ -5,19 +5,20 @@
 <nav th:replace="partials/partials.html :: nav"></nav>
 <header th:replace="partials/partials.html :: header('Goals')"></header>
 <main class="container">
+    <a class="btn btn-outline-dark rounded"  th:href="@{/goals/create}" style="margin: 5px;">Create a New Goal</a>
     <div class="row gy-4">
         <div class="col-3 col-md-4" th:each="goal : ${goals}"  >
             <article class="card" >
                 <div class="card-body" >
                     <h3 th:text=" ${goal.title}" ></h3>
-                    <h6>Started:   <span th:text=" ${goal.dateCreated} "></span></h6>
+                    <h6>Start:   <span th:text=" ${goal.dateCreated} "></span></h6>
                     <h6>Finish by:  <span th:text=" ${goal.endDate} "></span></h6>
                     <h6>Amount to Success:  $<span th:text="${goal.goalAmount}"></span></h6>
                     <a th:href="@{/goals/{id}(id=${goal.id})}">More Details</a>
                 </div>
             </article>
         </div>
-        <a th:href="@{/goals/create}">Create a New Goal</a>
+
     </div>
     <th:block th:replace="partials/partials.html :: scripts"></th:block>
 </main>
