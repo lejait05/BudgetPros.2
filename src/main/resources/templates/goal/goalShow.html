@@ -212,9 +212,9 @@
         <!--    <p class="text-center">Created by <span th:text="${goal.user.email}"></span></p>-->
         <th:block sec:authorize="isAuthenticated()">
             <div class="text-center" th:if="${#authentication.principal.id == goal.user.id}">
-                <a class="btn btn-outline-dark rounded" th:href="@{/goal/{id}/edit(id=${goal.id})}"><i
+                <a class="btn btn-outline-dark rounded" th:href="@{/goals/{id}/edit(id=${goal.id})}"><i
                         class="bi bi-pencil"></i></a>
-                <form class="d-inline" th:action="@{/goal/{id}/delete/(id=${goal.id})}" th:method="POST">
+                <form class="d-inline" th:action="@{/goals/{id}/delete/(id=${goal.id})}" th:method="POST">
                     <button id="delete-post-btn" class="btn btn-outline-danger rounded"><i class="bi bi-trash"></i>
                     </button>
                 </form>
