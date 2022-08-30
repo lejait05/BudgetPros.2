@@ -92,7 +92,7 @@ public class TransactionController {
             model.addAttribute("accountBalance", accountBalance);
         }
 
-        return "/profile";
+        return "profile";
     }
 
     @PostMapping("/transactions/create")
