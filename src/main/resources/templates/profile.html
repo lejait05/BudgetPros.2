@@ -17,16 +17,14 @@
             </div>
             <div class="container listBlock pt-3">
                 <div class="d-flex justify-content-between mb-2 mt-3 py-1">
-                    <h4 class="ms-3 mb-0">Account Balance: <span id="accountBalance" th:text="${accountBalance}"></span>
-                    </h4>
-                    <select class=" py-2 me-2 border-0" name="currency-conversion" id="currency-conversion">
+                    <h4 class="ms-3 mb-0">Account Balance: <select class=" py-2 me-2 border-1" name="currency-conversion" id="currency-conversion" >
                         <option value="usd">&#36;USD</option>
                         <option value="gbp">&#163;GBP</option>
                         <option value="eur">&#128;EUR</option>
                         <option value="cny">&#22278;CNY</option>
                         <option value="jpy">&#165;JPY</option>
                         <option value="hkd">&#22291;HKD</option>
-                    </select>
+                    </select> <span id="accountBalance" th:text="${accountBalance}"></span></h4>
                 </div>
                 <hr>
                 <div class="my-2 py-1 d-flex justify-content-between">
@@ -287,7 +285,6 @@
         // NB: using Open Exchange Rates here, but you can use any source!
         'https://openexchangerates.org/api/latest.json?app_id=ca1479de4d664ccbaee4c5616904d9cd',
         function (data) {
-            console.log(data)
             // Check money.js has finished loading:
             if (typeof fx !== "undefined" && fx.rates) {
                 fx.rates = data.rates;
@@ -299,42 +296,40 @@
                     base: data.base
                 }
             }
-            // console.log(parseFloat($(".accountBalance").text()))
-            // console.log($(".accountBalance").text())
-            // console.log(fx.convert(((parseFloat($(".accountBalance").text()))), {from: 'USD', to: 'HKD'}))
-            // console.log(fx.convert(1, {from: 'USD', to: 'HKD'}))
+
         }
     );
     $("#accountBalance").click(function () {
-        fx.convert(((parseFloat($("#accountBalance").text()))), {from: '', to: ''});
+        fx.convert(((parseFloat($("#accountBalance").text()))), {from: '', to: ''}).toFixed(2);
     });
     $("#currency-conversion").on('focus', function () {
         // Store the current value on focus and on change
         previous = $(this).val().toUpperCase()
     }).change(function () {
-        // alert(fx.convert(((parseFloat($("#accountBalance").text()))), {from: 'USD', to: $(this).val().toUpperCase()}));\
-        // alert(previous)
-        $(this).val().toUpperCase()
+
         var updated_value;
         // var regExp = /[a-zA-Z]/g;
         if (($("#accountBalance").text())) {
             $('#currency-conversion').mouseover(function () {
                 location.reload();
+
             });
-            // alert('here')
+
             var temp = $("#accountBalance").text().replace(/^\D+/g, '');
-            // alert(temp)
-            updated_value = fx.convert(parseFloat(temp), {from: previous, to: $(this).val().toUpperCase()})
+
+            updated_value = fx.convert(parseFloat(temp), {from: previous, to: $(this).val().toUpperCase()}).toFixed(2)
+
         } else {
-            updated_value = fx.convert(((parseFloat($("#accountBalance").text()))), {
+            updated_value = fx.convert(((parseFloat($("#accountBalance").text()))).toFixed(2), {
                 from: previous,
                 to: $(this).val().toUpperCase()
             })
+
         }
-        var currency_value = $("#currency-conversion option:selected").text()
-        // alert(currency_value)
-        // alert(updated_value)
+        var currency_value = $("#currency-conversion option:selected").text().substring(5,7)
+
         $("#accountBalance").text(currency_value + updated_value);
+
     });
 </script>
 </body>
