@@ -27,24 +27,23 @@
                     </select> <span id="accountBalance" th:text="${accountBalance}"></span></h4>
                 </div>
                 <hr>
-                <div class="my-2 py-1 d-flex justify-content-between">
-                    <h4 class="ms-3 mb-0">Goals:</h4>
-                    <button type="button " class="me-3 bstyle pt-1" data-bs-toggle="modal" data-bs-target="#goalModal">
-                        View
+                <div class="my-2 py-1 d-grid">
+                    <button type="button" class="w-100 bstyle pt-1 fw-bold" data-bs-toggle="modal" data-bs-target="#goalModal">
+                        View Goal List
                     </button>
                 </div>
                 <hr>
-                <div class="my-2 py-1"><h4 class="ms-3 mb-0">Budget Expenses: $<span th:text="${budgetSum}"></span></h4>
+                <div class="my-2 py-1"><h4 class="ms-3 mb-0">Budget Expenses: $<span th:text="${#numbers.formatDecimal(budgetSum, 0, 'COMMA', 2, 'POINT')}"></span></h4>
                 </div>
                 <hr>
-                <div class="my-2 py-1"><h4 class="ms-3 mb-0">Extra Expenses: $<span th:text="${extraSum}"></span></h4>
+                <div class="my-2 py-1"><h4 class="ms-3 mb-0">Extra Expenses: $<span th:text="${#numbers.formatDecimal(extraSum, 0, 'COMMA', 2, 'POINT')}"></span></h4>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="container-fluid col-sm-12 col-md-8 h-50 pt-3 ">
-        <div class="container d-flex justify-content-between align-items-baseline pt-2 transactionBlock">
+        <div class="container d-flex justify-content-between align-items-baseline py-1 transactionBlock">
             <div class="align-content-center">
                 <form th:action="@{/profile}" th:method="get">
                     <select class="filterForm pt-1" name="sortTransaction" id="sortTransaction">
@@ -58,13 +57,13 @@
                 </form>
             </div>
 
-            <h4 class="text-light pt-1">Transaction History</h4>
+            <h4 class="text-light pt-2">Transaction History</h4>
             <button class="bstyle pt-1" type="button" data-bs-toggle="modal" data-bs-target="#createModal">Add
                 Transaction
             </button>
         </div>
         <div class="container listBlock mb-4">
-            <div id="transactionList" class=" mt-3" th:each="transaction: ${transactions}">
+            <div id="transactionList"  class=" mt-3" th:each="transaction: ${transactions}">
                 <div
                         th:data-id="${transaction.id}"
                         th:data-title="${transaction.title}"
@@ -74,12 +73,12 @@
                         th:data-memo="${transaction.memo}"
                         th:data-budgetCategory="${transaction.budgetCategories.id}"
                         th:data-goalid="${(transaction.goal != null) ? transaction.goal.id : 'null'}"
-                        class="transaction d-flex p-1">
+                        class="transaction d-flex p-1 pt-3">
                     <h5 class=" text-center w-25" th:text="${transaction.title}">Transaction Title</h5>
                     <h5 class=" text-center w-25" th:text="${#temporals.format(transaction.date, 'MMM-dd-yy')}">
                         Date</h5>
-                    <h5 class=" text-center w-25">$<span th:text="${transaction.amount}"></span></h5>
-                    <h5 class=" text-center w-25" th:text="${transaction.transactionType.name}">Transaction Type</h5>
+                    <h5 class=" text-center w-25">$<span class="transAmount" th:text="${#numbers.formatDecimal(transaction.amount, 0, 'COMMA', 2, 'POINT')}"></span></h5>
+                    <h5 class=" text-center w-25 transType" th:text="${transaction.transactionType.name}">Transaction Type</h5>
                 </div>
 
             </div>
@@ -166,9 +165,9 @@
                         <div class="d-flex justify-content-between border p-1">
 
                             <h5 class="w-25 text-center" th:text="${goal.title}"></h5>
-                            <h6 class="w-25 text-center">$<span th:text="${goal.currentAmount}"></span></h6>
-                            <h6 class="w-25 text-center">$<span th:text="${goal.goalAmount}"></span></h6>
-                            <h6 class="w-25 text-center"><span th:text="${goal.endDate}"></span></h6>
+                            <h6 class="w-25 text-center">$<span th:text="${#numbers.formatDecimal(goal.goalAmount, 0, 'COMMA', 2, 'POINT')}"></span></h6>
+                            <h6 class="w-25 text-center">$<span th:text="${#numbers.formatDecimal(goal.goalAmount, 0, 'COMMA', 2, 'POINT')}"></span></h6>
+                            <h6 class="w-25 text-center"><span class="endDate" th:text="${goal.endDate}"></span></h6>
 
                         </div>
                     </div>
@@ -257,6 +256,7 @@
 <block th:replace="partials/partials.html :: scripts"></block>
 <script src="/jquery-3.6.0.js"></script>
 <script>
+
     <!--  event listener for individual modal  -->
     $(".transaction").click(function () {
         $(".modal").css("display", "block")
@@ -269,8 +269,18 @@
         $("#detailsBudgetCategories").val($(this).data("budgetcategory"))
         $("#detailsGoal").val(String($(this).data("goalid")))
 
-
     })
+
+    // for highlighting the transactions according to transaction type
+    $(".transType").each(function(index,element){
+        if($(element).text() === "one-time deposit" || $(element).text() === "recurring income"){
+            $(element).parent().css('background', 'linear-gradient(45deg, #AEF3AE, white)');
+        } else if($(element).text() === "one-time expense" || $(element).text() === "recurring expense"){
+            $(element).parent().css('background', 'linear-gradient(45deg, #FF8F88, white)');
+        }
+    })
+
+
     //event listener to close individual transaction view modal
     $(".eventClose").click(function () {
         $(".modal").css("display", "none");
