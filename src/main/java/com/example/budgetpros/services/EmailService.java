@@ -18,7 +18,7 @@ import java.io.IOException;
 @Service("emailService")
 public class EmailService {
 
-    @Value("${spring.sendgrid.api-key}")
+    @Value("${SPRING_SENDGRID_API_KEY}")
     private String key;
 
     @Value("${SENDGRID_EMAIL}")
