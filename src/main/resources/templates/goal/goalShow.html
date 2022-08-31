@@ -8,53 +8,55 @@
     <div>
         <table>
             <tr>
-                <td></td>
-                <td><label class="form-label" for="dateCreated">Start Saving On:</label></td>
-                <td><label class="form-label" for="endDate">Finish Saving By:</label></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; "><label class="form-label" for="dateCreated">Start Saving On:</label></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; "><label class="form-label" for="endDate">Finish Saving By:</label></td>
+
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
             </tr>
             <tr>
-                <td></td>
-                <td style="text-align: left;">
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; ">
                     <p th:text="*{goal.dateCreated}" class="text-align: left" id="dateCreated"></p>
                 </td>
-                <td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; ">
                     <p th:text="*{goal.endDate}" class="text-align: left" id="endDate"></p>
                 </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
             </tr>
             <tr>
-                <td></td>
-                <td><label class="form-label" for="goalAmount">Total to be Saved: $</label></td>
-                <td>
-                    <span th:text="${goal.goalAmount}" id="goalAmount" class="text-align: left"></span>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; "><label class="form-label">Total to be Saved: $</label></td>
+                <td th:text="${goal.goalAmount}" style="height:20px; width: 180px;">
+<!--                    <span th:text="${goal.goalAmount}" id="goalAmount" class="text-align: left"></span>-->
                 </td>
-                <td></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
                 <td>
 
                 </td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
             </tr>
             <tr>
-                <td></td>
-                <td><label class="form-label" for="currentAmount">Prior Savings: $</label></td>
-                <td>
-                    <span th:text="${goal.currentAmount}" id="currentAmount" class="text-align: left"></span>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; "><label class="form-label" >Prior Savings: $</label></td>
+                <td th:text="${goal.currentAmount}"style="height:20px; width: 180px;">
+<!--                    <span th:text="${goal.currentAmount}" id="currentAmount" class="text-align: left"></span>-->
                 </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
             </tr>
             <!--            <tr>-->
             <!--                <td></td>-->
