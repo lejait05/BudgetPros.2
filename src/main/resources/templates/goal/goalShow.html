@@ -20,10 +20,10 @@
             <tr>
                 <td></td>
                 <td style="text-align: left;">
-                    <p th:text="*{goal.dateCreated}" class="text-align: left" id="dateCreated"></p>
+                    <p th:text="*{goal.dateCreated}" class="dateFormat text-align: left" id="dateCreated"></p>
                 </td>
                 <td>
-                    <p th:text="*{goal.endDate}" class="text-align: left" id="endDate"></p>
+                    <p th:text="*{goal.endDate}" class="dateFormat text-align: left" id="endDate"></p>
                 </td>
                 <td></td>
                 <td></td>
@@ -35,7 +35,7 @@
                 <td></td>
                 <td><label class="form-label" for="goalAmount">Total to be Saved: $</label></td>
                 <td>
-                    <span th:text="${goal.goalAmount}" id="goalAmount" class="text-align: left"></span>
+                    <span th:text="${#numbers.formatDecimal(goal.goalAmount, 1, 'COMMA', 2, 'POINT')}" id="goalAmount" class="text-align: left"></span>
                 </td>
                 <td></td>
                 <td>
@@ -80,7 +80,7 @@
                 <td></td>
                 <td ><label class="form-label" for="currentAmount">Prior Savings: $</label></td>
                 <td>
-                    <span th:text="${goal.currentAmount}" id="currentAmount" class="text-align: left"></span>
+                    <span th:text="${#numbers.formatDecimal(goal.currentAmount, 1, 'COMMA', 2, 'POINT')}" id="currentAmount" class="text-align: left"></span>
                 </td>
                 <td></td>
                 <td></td>
@@ -223,6 +223,16 @@
     </div>
 </main>
 <th:block th:replace="partials/partials.html :: scripts"></th:block>
+<script src="/jquery-3.6.0.js"></script>
+<script type="text/javascript" src="/js/date.js"></script>
+<script type="text/javascript" src="/js/parser.js"></script>
+<script>
+
+    $(".dateFormat").each(function(index,element){
+        $(element).text(Date.parse($(element).text()).toString("MMM-dd-yy"))
+    })
+
+</script>
 </body>
 </html>
 
