@@ -1,9 +1,9 @@
 body{
     background: linear-gradient(45deg,#C1B19A, white);
-    list-style-image: url("/img/Budgetlogo3.png");
     background-size: cover;
-    height: 100%;
-    /*overflow: hidden;*/
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     font-family: 'Tajawal', sans-serif;
 
 }
@@ -74,7 +74,7 @@ body{
     position: absolute;
     left: 0;
     bottom: -4px;
-    width: 0px;
+    width: 0;
     border-radius: 2px;
     background-color: darkred;
     transition: 0.4s ease;
@@ -121,4 +121,14 @@ body{
 .blockquote-footer {
     color: #CF9D11;
 }
+
+
+.btn-lg {
+    color: #CF9D11;
+}
+
+.btn2 {
+    color: #CF9D11;
+}
+
 

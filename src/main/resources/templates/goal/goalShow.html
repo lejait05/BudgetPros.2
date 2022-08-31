@@ -14,43 +14,42 @@
                 <td style="height:20px; width: 18px;text-align: left; "></td>
                 <td style="height:20px; width: 18px;text-align: left; "></td>
                 <td style="height:20px; width: 180px;text-align: left; "><label class="form-label" for="endDate">Finish Saving By:</label></td>
-
                 <td style="height:20px; width: 18px;text-align: left; "></td>
                 <td style="height:20px; width: 18px;text-align: left; "></td>
             </tr>
             <tr>
+
                 <td style="height:20px; width: 18px;text-align: left; "></td>
                 <td style="height:20px; width: 180px;text-align: left; ">
-                    <p th:text="*{goal.dateCreated}" class="text-align: left" id="dateCreated"></p>
+                    <p th:text="*{goal.dateCreated}" class=" dateFormat text-align: left" id="dateCreated"></p>
                 </td>
                 <td style="height:20px; width: 18px;text-align: left; "></td>
                 <td style="height:20px; width: 18px;text-align: left; "></td>
                 <td style="height:20px; width: 18px;text-align: left; "></td>
                 <td style="height:20px; width: 180px;text-align: left; ">
-                    <p th:text="*{goal.endDate}" class="text-align: left" id="endDate"></p>
+                    <p th:text="*{goal.endDate}" class=" dateFormat text-align: left" id="endDate"></p>
                 </td>
-
                 <td style="height:20px; width: 18px;text-align: left; "></td>
                 <td style="height:20px; width: 18px;text-align: left; "></td>
             </tr>
             <tr>
+
                 <td style="height:20px; width: 18px;text-align: left; "></td>
                 <td style="height:20px; width: 180px;text-align: left; "><label class="form-label">Total to be Saved: $</label></td>
-                <td th:text="${goal.goalAmount}" style="height:20px; width: 180px;">
+                <td th:text="${#numbers.formatDecimal(goal.goalAmount, 1, 'COMMA', 2, 'POINT')}" style="height:20px; width: 180px;">
 <!--                    <span th:text="${goal.goalAmount}" id="goalAmount" class="text-align: left"></span>-->
-                </td>
-                <td style="height:20px; width: 18px;text-align: left; "></td>
-                <td>
 
                 </td>
                 <td style="height:20px; width: 18px;text-align: left; "></td>
                 <td style="height:20px; width: 18px;text-align: left; "></td>
                 <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
             </tr>
             <tr>
+
                 <td style="height:20px; width: 18px;text-align: left; "></td>
                 <td style="height:20px; width: 180px;text-align: left; "><label class="form-label" >Prior Savings: $</label></td>
-                <td th:text="${goal.currentAmount}"style="height:20px; width: 180px;">
+                <td th:text="${#numbers.formatDecimal(goal.currentAmount, 1, 'COMMA', 2, 'POINT')}" style="height:20px; width: 180px;">
 <!--                    <span th:text="${goal.currentAmount}" id="currentAmount" class="text-align: left"></span>-->
                 </td>
                 <td style="height:20px; width: 18px;text-align: left; "></td>
@@ -263,6 +262,16 @@
     </div>
 </main>
 <th:block th:replace="partials/partials.html :: scripts"></th:block>
+<script src="/jquery-3.6.0.js"></script>
+<script type="text/javascript" src="/js/date.js"></script>
+<script type="text/javascript" src="/js/parser.js"></script>
+<script>
+
+    $(".dateFormat").each(function(index,element){
+        $(element).text(Date.parse($(element).text()).toString("MMM-dd-yy"))
+    })
+
+</script>
 </body>
 </html>
 
