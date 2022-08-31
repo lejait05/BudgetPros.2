@@ -11,9 +11,9 @@
             <article class="card" style="border: 1px solid" >
                 <div class="card-body" >
                     <h3 th:text=" ${goal.title}" ></h3>
-                    <h6>Start:   <span th:text=" ${goal.dateCreated} "></span></h6>
-                    <h6>Finish by:  <span th:text=" ${goal.endDate} "></span></h6>
-                    <h6>Amount to Success:  $<span th:text="${goal.goalAmount}"></span></h6>
+                    <h6>Start:   <span class="dateFormat" th:text=" ${goal.dateCreated} "></span></h6>
+                    <h6>Finish by:  <span class="dateFormat" th:text=" ${goal.endDate} "></span></h6>
+                    <h6>Amount to Success:  $<span th:text="${#numbers.formatDecimal(goal.goalAmount, 1, 'COMMA', 2, 'POINT')}"></span></h6>
                     <a th:href="@{/goals/{id}(id=${goal.id})}">More Details</a>
                 </div>
             </article>
@@ -21,6 +21,16 @@
 
     </div>
     <th:block th:replace="partials/partials.html :: scripts"></th:block>
+    <script src="/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="/js/date.js"></script>
+    <script type="text/javascript" src="/js/parser.js"></script>
+    <script>
+
+        $(".dateFormat").each(function(index,element){
+            $(element).text(Date.parse($(element).text()).toString("MMM-dd-yy"))
+        })
+
+    </script>
 </main>
 </body>
 </html>
