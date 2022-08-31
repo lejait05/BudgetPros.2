@@ -8,84 +8,54 @@
     <div>
         <table>
             <tr>
-                <td></td>
-                <td><label class="form-label" for="dateCreated">Start Saving On:</label></td>
-                <td><label class="form-label" for="endDate">Finish Saving By:</label></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; "><label class="form-label" for="dateCreated">Start Saving On:</label></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; "><label class="form-label" for="endDate">Finish Saving By:</label></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
             </tr>
             <tr>
-                <td></td>
-                <td style="text-align: left;">
-                    <p th:text="*{goal.dateCreated}" class="dateFormat text-align: left" id="dateCreated"></p>
+
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; ">
+                    <p th:text="*{goal.dateCreated}" class=" dateFormat text-align: left" id="dateCreated"></p>
                 </td>
-                <td>
-                    <p th:text="*{goal.endDate}" class="dateFormat text-align: left" id="endDate"></p>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; ">
+                    <p th:text="*{goal.endDate}" class=" dateFormat text-align: left" id="endDate"></p>
                 </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
             </tr>
             <tr>
-                <td></td>
-                <td><label class="form-label" for="goalAmount">Total to be Saved: $</label></td>
-                <td>
-                    <span th:text="${#numbers.formatDecimal(goal.goalAmount, 1, 'COMMA', 2, 'POINT')}" id="goalAmount" class="text-align: left"></span>
+
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; "><label class="form-label">Total to be Saved: $</label></td>
+                <td th:text="${#numbers.formatDecimal(goal.goalAmount, 1, 'COMMA', 2, 'POINT')}" style="height:20px; width: 180px;">
+<!--                    <span th:text="${goal.goalAmount}" id="goalAmount" class="text-align: left"></span>-->
+
                 </td>
-                <td></td>
-                <td>
-                    <th:block sec:authorize="isAuthenticated()">
-                        <div class="text-center" th:if="${#authentication.principal.id == goal.user.id}">
-                            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-                            <script type="text/javascript">
-                                window.onload = function () {
-                                    var currentAmount = [[${goal.currentAmount}]];
-                                    var needToSave = [[${goal.goalAmount}]]-[[${goal.currentAmount}]]
-                                    var chart = new CanvasJS.Chart("chartContainer", {
-                                        animationEnabled: true,
-                                        theme: "light2",
-                                        axisY: {
-                                            labelFormatter: function ([]) {
-                                                return "$" + CanvasJS.formatNumber([].value, "#,#00");
-                                            },
-                                            includeZero: false
-                                        },
-                                        data: [
-                                            {// Change type to "doughnut", "line", "splineArea", etc.
-                                                type: "pie",
-                                                dataPoints: [
-                                                    {label: "Current Amount Saved", y: currentAmount},
-                                                    {label: "Still Need to Save", y: needToSave}
-                                                ]
-                                            }
-                                        ]
-                                    });
-                                    chart.render();
-                                }
-                            </script>
-                        </div>
-                    </th:block>
-                    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
             </tr>
             <tr>
-                <td></td>
-                <td ><label class="form-label" for="currentAmount">Prior Savings: $</label></td>
-                <td>
-                    <span th:text="${#numbers.formatDecimal(goal.currentAmount, 1, 'COMMA', 2, 'POINT')}" id="currentAmount" class="text-align: left"></span>
+
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; "><label class="form-label" >Prior Savings: $</label></td>
+                <td th:text="${#numbers.formatDecimal(goal.currentAmount, 1, 'COMMA', 2, 'POINT')}" style="height:20px; width: 180px;">
+<!--                    <span th:text="${goal.currentAmount}" id="currentAmount" class="text-align: left"></span>-->
                 </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
             </tr>
             <!--            <tr>-->
             <!--                <td></td>-->
@@ -209,7 +179,76 @@
             <!--                <td></td>-->
             <!--            </tr>-->
         </table>
-        <!--    <p class="text-center">Created by <span th:text="${goal.user.email}"></span></p>-->
+        <div>
+            <th:block sec:authorize="isAuthenticated()">
+                <div class="text-center" th:if="${#authentication.principal.id == goal.user.id}">
+                    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                    <script type="text/javascript">
+                        window.onload = function () {
+                            var currentAmount = [[${goal.currentAmount}]];
+                            var needToSave = [[${goal.goalAmount}]] - [[${goal.currentAmount}]]
+                            var chart = new CanvasJS.Chart("chartContainer", {
+                                animationEnabled: true,
+                                theme: "light2",
+                                axisY: {
+                                    labelFormatter: function ([]) {
+                                        return "$" + CanvasJS.formatNumber([].value, "#,#00");
+                                    },
+                                    includeZero: false
+                                },
+                                data: [
+                                    {// Change type to "doughnut", "line", "splineArea", etc.
+                                        type: "pie",
+                                        dataPoints: [
+                                            {label: "Current Amount Saved", y: currentAmount},
+                                            {label: "Still Need to Save", y: needToSave}
+                                        ]
+                                    }
+                                    <!--                    <script type="text/javascript">-->
+                                    <!--                        window.onload = function () {-->
+                                    <!--                            var currentAmount = [[${goal.currentAmount}]];-->
+                                    <!--                            var needToSave = [[${goal.goalAmount}]] - [[${goal.currentAmount}]]-->
+                                    <!--                            var chart = new Chart("chartContainer", {-->
+                                    <!--                                animationEnabled: true,-->
+                                    <!--                                theme: "light2",-->
+                                    <!--                                data: [-->
+// <!--                                    {// Change type to "doughnut", "line", "splineArea", etc.-->
+                                    <!--                                        type: "pie",-->
+                                    <!--                                        dataPoints: [-->
+                                    <!--                                            {label: "Current Amount Saved", y: currentAmount},-->
+                                    <!--                                            {label: "Still Need to Save", y: needToSave}-->
+                                    <!--                                        ]-->
+                                    <!--                                    }-->
+
+                                ]
+                            });
+                            chart.render();
+                        }
+                    </script>
+                </div>
+            </th:block>
+            <div id="chartContainer" style="height: 300px; width: 100%;">
+                <div class="chart-container"
+                     style="position: relative; text-align: left; cursor: auto; direction: ltr;">
+                    <canvas class="chart-canvas" width="1872" height="600"
+                            style="width: 936px; height: 300px; position: absolute; user-select: none;"></canvas>
+                    <canvas class="chart-canvas" width="1872" height="600"
+                            style="width: 936px; height: 300px; position: absolute; -webkit-tap-highlight-color: transparent; user-select: none; cursor: default;"></canvas>
+                    <div class="chart-toolbar"
+                         style="position: absolute; right: 1px; top: 1px; border: 1px solid transparent;"></div>
+                    <div class="chart-tooltip"
+                         style="position: absolute; height: auto; box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 2px 2px; z-index: 1000; pointer-events: none; display: none; border-radius: 5px;">
+                        <div style="width: auto; height: auto; min-width: 50px; line-height: normal; margin: 0px; padding: 5px; font-family: Calibri, Arial, Georgia, serif; font-weight: normal; font-style: italic; font-size: 14px; color: rgb(0, 0, 0); text-shadow: rgba(0, 0, 0, 0.1) 1px 1px 1px; text-align: left; border: 2px solid gray; background: rgba(255, 255, 255, 0.9); text-indent: 0px; white-space: nowrap; border-radius: 5px; user-select: none;">
+
+                            <span data-color="#6D78AD" style="color: rgb(109, 120, 173);">Current Amount Saved:</span>
+                            <span data-color="#51CDA0" style="color: rgb(81, 205, 160);">Still Need to Save:</span>
+                            &nbsp;&nbsp;1,000
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
         <th:block sec:authorize="isAuthenticated()">
             <div class="text-center" th:if="${#authentication.principal.id == goal.user.id}">
                 <a class="btn btn-outline-dark rounded" th:href="@{/goals/{id}/edit(id=${goal.id})}"><i
