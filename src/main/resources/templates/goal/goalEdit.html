@@ -5,7 +5,7 @@
 <nav th:replace="partials/partials.html :: nav"></nav>
 <header th:replace="partials/partials.html :: header('Edit Goal')"></header>
 <main class="container">
-    <form th:action="@{/goal/{id}/edit (id = ${goalToEdit.id})}" th:method="POST" th:object="${goalToEdit}">
+    <form th:action="@{/goals/{id}/edit (id = ${goalToEdit.id})}" th:method="POST" th:object="${goalToEdit}">
         <div class="mb-3">
             <label class="form-label" for="title">Title</label>
             <input th:field="*{title}" class="form-control" id="title" type="text" name="title" placeholder="Enter title here">
