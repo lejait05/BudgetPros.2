@@ -122,3 +122,7 @@ body{
     color: #CF9D11;
 }
 
+.lastTransaction{
+    border-bottom: none;
+    padding-bottom: 10px;
+}
