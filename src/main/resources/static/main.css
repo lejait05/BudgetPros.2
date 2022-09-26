@@ -1,11 +1,134 @@
 body{
-    background-image:  url("images/rolling.gif");
+    background: linear-gradient(45deg,#C1B19A, white);
     background-size: cover;
-    height: 100%;
-    /*overflow: hidden;*/
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    font-family: 'Tajawal', sans-serif;
 
 }
 
 .modal{
     display: none;
 }
+
+.bstyle{
+    border-radius: 5px;
+}
+
+.transactionBlock{
+    background-color: #0C3666;
+    text-decoration-color: #FFFFFF;
+    height: 50px;
+    border-bottom: #FF0001 2px solid;
+
+}
+
+.displayBlock{
+    border: 1px solid black;
+    background-color: #FFFFFF;
+
+}
+
+.listBlock{
+    border: 1px solid black;
+    background-color: #FFFFFF;
+
+}
+
+.filterForm{
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    height: 30px;
+}
+
+.filterbtn{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.transaction{
+    border-bottom: 1px solid black;
+}
+
+.modal-header {
+    background-color: #0C3666;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin: 0 10px;
+}
+
+.nav-link {
+    text-decoration: none;
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    border-radius: 2px;
+    background-color: darkred;
+    transition: 0.4s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.mainnav {
+    background-color: #0C3666;
+    border-bottom: 2px solid #FF0001;
+    font-family: 'Tajawal', sans-serif;
+}
+
+.login {
+    position: relative;
+    max-width: 65%;
+    margin: auto;
+    border-radius: 100%;
+}
+
+.card {
+    position: center;
+}
+
+.card-img-top {
+    background-size: contain;
+}
+
+.image{
+    height: 320px;
+    width: 370px;
+}
+
+.fst-italic {
+    color: #CF9D11;
+}
+
+.mb-5 {
+    color: #CF9D11;
+}
+
+.blockquote-footer {
+    color: #CF9D11;
+}
+
+
+.btn-lg {
+    color: #CF9D11;
+}
+
+.btn2 {
+    color: #CF9D11;
+}
+
+

@@ -5,22 +5,32 @@
 <nav th:replace="partials/partials.html :: nav"></nav>
 <header th:replace="partials/partials.html :: header('Goals')"></header>
 <main class="container">
+    <a class="btn btn-outline-dark rounded"  th:href="@{/goals/create}" style="margin: 5px;">Create a New Goal</a>
     <div class="row gy-4">
-        <div class="col-12 col-md-6" th:each="goal : ${goals}">
-            <article class="card">
-                <div class="card-body">
-                    <h3 th:text="'Goal: ' + ${goal.title}"></h3>
-                   <p>By <span th:text="${goal.user.getUsername()}"></span></p>
-                    <h6>Started:   <span th:text=" ${goal.dateCreated} "></span></h6>
-                    <h6>Finish by:  <span th:text=" ${goal.endDate} "></span></h6>
-                    <h6>Amount to Success:  $<span th:text="${goal.goalAmount}"></span></h6>
+        <div class="col-3 col-md-4" th:each="goal : ${goals}"  >
+            <article class="card" style="border: 1px solid" >
+                <div class="card-body" >
+                    <h3 th:text=" ${goal.title}" ></h3>
+                    <h6>Start:   <span class="dateFormat" th:text=" ${goal.dateCreated} "></span></h6>
+                    <h6>Finish by:  <span class="dateFormat" th:text=" ${goal.endDate} "></span></h6>
+                    <h6>Amount to Success:  $<span th:text="${#numbers.formatDecimal(goal.goalAmount, 1, 'COMMA', 2, 'POINT')}"></span></h6>
                     <a th:href="@{/goals/{id}(id=${goal.id})}">More Details</a>
                 </div>
             </article>
         </div>
-        <a th:href="@{/goals/create}">Create a New Goal</a>
+
     </div>
     <th:block th:replace="partials/partials.html :: scripts"></th:block>
+    <script src="/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="/js/date.js"></script>
+    <script type="text/javascript" src="/js/parser.js"></script>
+    <script>
+
+        $(".dateFormat").each(function(index,element){
+            $(element).text(Date.parse($(element).text()).toString("MMM-dd-yy"))
+        })
+
+    </script>
 </main>
 </body>
 </html>

@@ -17,7 +17,7 @@
                     <!-- Background image for card set in CSS -->
                 </div>
                 <div class="card-body p-4 p-sm-5">
-                    <h5 class="card-title text-center mb-5 fw-light fs-5">Register</h5>
+                    <h5 class="card-title text-center mb-5 fw-light fs-5">Be A Pro not at Rookie</h5>
                     <form th:action="@{/sign-up}" th:method="POST" th:object="${user}">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingInputUsername" placeholder="myusername" th:field="*{username}" >
@@ -50,12 +50,12 @@
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInputPhoneNumber" placeholder="phone_number" th:field="*{phone_number}">
+                            <input name="phoneNumber" type="text" class="form-control" id="floatingInputPhoneNumber" placeholder="phone_number">
                             <label for="floatingInputPhoneNumber">Phone Number</label>
                         </div>
 
                         <div class="d-grid mb-2">
-                            <button class="btn btn-lg btn-primary btn-login fw-bold text-uppercase" type="submit">Register</button>
+                            <button class="btn btn-dark btn-lg btn-primary btn-login fw-bold text-uppercase" type="submit">Register</button>
                         </div>
 
                         <a class="d-block text-center mt-2 small" href="/login">Have an account? Sign In</a>

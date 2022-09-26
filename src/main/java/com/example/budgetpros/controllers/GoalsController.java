@@ -32,7 +32,7 @@ public class GoalsController {
         model.addAttribute("user", user);
         List<Goal> goals = goalsDao.findByUserId(user.getId());
         model.addAttribute("goals", goals);
-        return "/goal/goalIndex";
+        return "goal/goalIndex";
     }
 
     @GetMapping("/goals/{id}")
@@ -45,7 +45,7 @@ public class GoalsController {
     @GetMapping("/goals/create")
     public String createGoal(Model model){
         model.addAttribute("newGoal", new Goal());
-        return "/goal/goalCreate";
+        return "goal/goalCreate";
     }
 
 

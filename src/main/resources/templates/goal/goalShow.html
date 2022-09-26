@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="partials/partials.html :: head('Goal Details')">
-
-</head>
+<head th:replace="partials/partials.html :: head('Goal Details')"></head>
 <body>
 <nav th:replace="partials/partials.html :: nav"></nav>
 <header th:replace="partials/partials.html :: header(${goal.title})"></header>
@@ -10,224 +8,252 @@
     <div>
         <table>
             <tr>
-                <td></td>
-                <td><label class="form-label" for="dateCreated">Start Saving On:</label></td>
-                <td><label class="form-label" for="endDate">Finish Saving By:</label></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; "><label class="form-label" for="dateCreated">Start Saving On:</label></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; "><label class="form-label" for="endDate">Finish Saving By:</label></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
             </tr>
             <tr>
-                <td></td>
-                <td>
-                    <p th:text="*{goal.dateCreated}" class="text-center" id="dateCreated"></p>
+
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; ">
+                    <p th:text="*{goal.dateCreated}" class=" dateFormat text-align: left" id="dateCreated"></p>
                 </td>
-                <td>
-                    <p th:text="*{goal.endDate}" class="text-center" id="endDate"></p>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; ">
+                    <p th:text="*{goal.endDate}" class=" dateFormat text-align: left" id="endDate"></p>
                 </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
             </tr>
             <tr>
-                <td></td>
-                <td><label class="form-label" for="goalAmount">Total to be Saved: $</label></td>
-                <td>
-                    <span th:text="${goal.goalAmount}" id="goalAmount"></span>
+
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; "><label class="form-label">Total to be Saved: $</label></td>
+                <td th:text="${#numbers.formatDecimal(goal.goalAmount, 1, 'COMMA', 2, 'POINT')}" style="height:20px; width: 180px;">
+<!--                    <span th:text="${goal.goalAmount}" id="goalAmount" class="text-align: left"></span>-->
+
                 </td>
-                <td></td>
-                <td>
-<!--                    style="height:20px; width: 80px; background-color:#FFFFFF; border-top: solid 1px #D5E7A9; border-bottom: 0px; border-right: 0px; border-left: 0px; font-size: 13px; font-family:Verdana; color:#000000; text-align: left; ">-->
-                    <th:block sec:authorize="isAuthenticated()">
-                        <div class="text-center" th:if="${#authentication.principal.id == goal.user.id}">
-<script th:src="@{/profile.html}"></script>
-                            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-                            <script type="text/javascript">
-
-
-                                window.onload = function () {
-
-                                    var chart = new CanvasJS.Chart("chartContainer", {
-                                        animationEnabled: true,
-                                        theme: "light2",
-                                        data: [
-                                            {
-                                                // Change type to "doughnut", "line", "splineArea", etc.
-                                                type: "pie",
-                                                dataPoints: [
-                                                    { label: "Current Amount Saved", y:30 },
-                                                    { label: "Still Need to Save" , y:70   }
-
-                                                ]
-                                            }
-                                        ]
-                                    });
-                                    chart.render();
-                                //     setTimeout(function () { updateChart() }, 1000);
-                                }
-                                // // function updateChart() {
-                                //     $.getJSON("/home/json?count=1&xStart="+ (dataPoints.length + 1) , function (data) {
-                                //         $.each(data, function (index) {
-                                //             dataPoints.push(data[index]);
-                                //         });
-                                //         chart.render();
-                                //         setTimeout(function () { updateChart() }, 1000);
-                                //     });
-                                // }
-                                //
-                                // });
-                            </script>
-                        </div>
-                    </th:block>  <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
             </tr>
-<!--            <tr>-->
-<!--                <td></td>-->
-<!--                <td><label class="form-label" for="preSaved">Prior Savings:></label></td>-->
-<!--                <td>-->
-<!--                    <p th:text="*{goal.preSaved}" onchange="calcule2()" id="preSaved" value="" size="8"/></p>-->
-<!--                </td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td></td>-->
-<!--                <td><label class="form-label" for="curGoal">Current Savings Goal:></label></td>-->
-<!--                <td>-->
-<!--                    <p th:text="*{goal.curGoal}" onchange="calcule2()" id="curGoal" value="" size="8"-->
-<!--                       disabled="disabled"></p>-->
-<!--                </td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td></td>-->
-<!--                <td><label class="form-label" for="needSave">I still need to save:></label></td>-->
-<!--                <td><p th:field="*{needSave}" onchange="calcule2()" id="needSave" value="" size="8"-->
-<!--                       disabled="disabled"></p>-->
-<!--                </td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td></td>-->
-<!--                <td><h3>Savings Plan Details:></h3></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td></td>-->
-<!--                <td><h4 class="form-label" id="interval">Savings Interval></h4></td>-->
-<!--                <td><label class="form-label" for="daily">Daily></label></td>-->
-<!--                <td><label class="form-label" for="weekly">Weekly></label></td>-->
-<!--                <td><label class="form-label" for="biweekly">Bi-Weekly></label></td>-->
-<!--                <td><label class="form-label" for="monthly">Monthly></label></td>-->
-<!--                <td><label class="form-label" for="yearly">Yearly<></label></td>-->
-<!--                <td></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
+            <tr>
 
-<!--                <td></td>-->
-<!--                <td><h4 class="form-label" id="amount">Amount to save:<></h4></td>-->
-<!--                <td>-->
-<!--                    <input th:field="*{daily}" onchange="calcule2()" id="daily" value="" size="8" disabled="disabled">-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <input th:field="*{weekly}" onchange="calcule2()" id="weekly" value="" size="8" disabled="disabled">-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <input th:field="*{biweekly}" onchange="calcule2()" id="biweekly" value="" size="8"-->
-<!--                           disabled="disabled">-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <input th:field="*{monthly}" onchange="calcule2()" id="monthly" value="" size="8"-->
-<!--                           disabled="disabled">-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <input th:field="*{yearly}" onchange="calcule2()" id="yearly" value="" size="8" disabled="disabled">-->
-<!--                </td>-->
-<!--                <td></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td></td>-->
-<!--                <td><h4 class="form-label" id="time">Time Interval:></h4></td>-->
-<!--                <td><label class="form-label" for="days">Days></label></td>-->
-<!--                <td><label class="form-label" for="weeks">Weeks></label></td>-->
-<!--                <td><label class="form-label" for="biweeks">Bi-Weeks></label></td>-->
-<!--                <td><label class="form-label" for="months">Months></label></td>-->
-<!--                <td><label class="form-label" for="years">Years></label></td>-->
-<!--                <td></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td></td>-->
-<!--                <td><h4 class="form-label" id="left">Time until goal is reached:></h4></td>-->
-<!--                <td>-->
-<!--                    <input th:field="*{days}" onchange="calcule2()" id="days" value="300" size="8" disabled="disabled">-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <input th:field="*{weeks}" onchange="calcule2()" id="weeks" value="42.8571428571429" size="8"-->
-<!--                           disabled="disabled">-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <input th:field="*{biweeks}" onchange="calcule2()" id="biweeks" value="21" size="8"-->
-<!--                           disabled="disabled">-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <input th:field="*{months}" onchange="calcule2()" id="months" value="9" size="8"-->
-<!--                           disabled="disabled">-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <input th:field="*{years}" onchange="calcule2()" id="years" value="0" size="8" disabled="disabled">-->
-<!--                </td>-->
-<!--                <td></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--                <td></td>-->
-<!--            </tr>-->
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 180px;text-align: left; "><label class="form-label" >Prior Savings: $</label></td>
+                <td th:text="${#numbers.formatDecimal(goal.currentAmount, 1, 'COMMA', 2, 'POINT')}" style="height:20px; width: 180px;">
+<!--                    <span th:text="${goal.currentAmount}" id="currentAmount" class="text-align: left"></span>-->
+                </td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+                <td style="height:20px; width: 18px;text-align: left; "></td>
+            </tr>
+            <!--            <tr>-->
+            <!--                <td></td>-->
+            <!--                <td><label class="form-label" for="curGoal">Current Savings Goal:></label></td>-->
+            <!--                <td>-->
+            <!--                    <p th:text="*{goal.curGoal}" onchange="calcule2()" id="curGoal" value="" size="8"-->
+            <!--                       disabled="disabled"></p>-->
+            <!--                </td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--            </tr>-->
+            <!--            <tr>-->
+            <!--                <td></td>-->
+            <!--                <td><label class="form-label" for="needSave">I still need to save:></label></td>-->
+            <!--                <td><p th:field="*{needSave}" onchange="calcule2()" id="needSave" value="" size="8"-->
+            <!--                       disabled="disabled"></p>-->
+            <!--                </td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--            </tr>-->
+            <!--            <tr>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--            </tr>-->
+            <!--            <tr>-->
+            <!--                <td></td>-->
+            <!--                <td><h3>Savings Plan Details:></h3></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--            </tr>-->
+            <!--            <tr>-->
+            <!--                <td></td>-->
+            <!--                <td><h4 class="form-label" id="interval">Savings Interval></h4></td>-->
+            <!--                <td><label class="form-label" for="daily">Daily></label></td>-->
+            <!--                <td><label class="form-label" for="weekly">Weekly></label></td>-->
+            <!--                <td><label class="form-label" for="biweekly">Bi-Weekly></label></td>-->
+            <!--                <td><label class="form-label" for="monthly">Monthly></label></td>-->
+            <!--                <td><label class="form-label" for="yearly">Yearly<></label></td>-->
+            <!--                <td></td>-->
+            <!--            </tr>-->
+            <!--            <tr>-->
+
+            <!--                <td></td>-->
+            <!--                <td><h4 class="form-label" id="amount">Amount to save:<></h4></td>-->
+            <!--                <td>-->
+            <!--                    <input th:field="*{daily}" onchange="calcule2()" id="daily" value="" size="8" disabled="disabled">-->
+            <!--                </td>-->
+            <!--                <td>-->
+            <!--                    <input th:field="*{weekly}" onchange="calcule2()" id="weekly" value="" size="8" disabled="disabled">-->
+            <!--                </td>-->
+            <!--                <td>-->
+            <!--                    <input th:field="*{biweekly}" onchange="calcule2()" id="biweekly" value="" size="8"-->
+            <!--                           disabled="disabled">-->
+            <!--                </td>-->
+            <!--                <td>-->
+            <!--                    <input th:field="*{monthly}" onchange="calcule2()" id="monthly" value="" size="8"-->
+            <!--                           disabled="disabled">-->
+            <!--                </td>-->
+            <!--                <td>-->
+            <!--                    <input th:field="*{yearly}" onchange="calcule2()" id="yearly" value="" size="8" disabled="disabled">-->
+            <!--                </td>-->
+            <!--                <td></td>-->
+            <!--            </tr>-->
+            <!--            <tr>-->
+            <!--                <td></td>-->
+            <!--                <td><h4 class="form-label" id="time">Time Interval:></h4></td>-->
+            <!--                <td><label class="form-label" for="days">Days></label></td>-->
+            <!--                <td><label class="form-label" for="weeks">Weeks></label></td>-->
+            <!--                <td><label class="form-label" for="biweeks">Bi-Weeks></label></td>-->
+            <!--                <td><label class="form-label" for="months">Months></label></td>-->
+            <!--                <td><label class="form-label" for="years">Years></label></td>-->
+            <!--                <td></td>-->
+            <!--            </tr>-->
+            <!--            <tr>-->
+            <!--                <td></td>-->
+            <!--                <td><h4 class="form-label" id="left">Time until goal is reached:></h4></td>-->
+            <!--                <td>-->
+            <!--                    <input th:field="*{days}" onchange="calcule2()" id="days" value="300" size="8" disabled="disabled">-->
+            <!--                </td>-->
+            <!--                <td>-->
+            <!--                    <input th:field="*{weeks}" onchange="calcule2()" id="weeks" value="42.8571428571429" size="8"-->
+            <!--                           disabled="disabled">-->
+            <!--                </td>-->
+            <!--                <td>-->
+            <!--                    <input th:field="*{biweeks}" onchange="calcule2()" id="biweeks" value="21" size="8"-->
+            <!--                           disabled="disabled">-->
+            <!--                </td>-->
+            <!--                <td>-->
+            <!--                    <input th:field="*{months}" onchange="calcule2()" id="months" value="9" size="8"-->
+            <!--                           disabled="disabled">-->
+            <!--                </td>-->
+            <!--                <td>-->
+            <!--                    <input th:field="*{years}" onchange="calcule2()" id="years" value="0" size="8" disabled="disabled">-->
+            <!--                </td>-->
+            <!--                <td></td>-->
+            <!--            </tr>-->
+            <!--            <tr>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--                <td></td>-->
+            <!--            </tr>-->
         </table>
-        <!--    <p class="text-center">Created by <span th:text="${goal.user.email}"></span></p>-->
+        <div>
+            <th:block sec:authorize="isAuthenticated()">
+                <div class="text-center" th:if="${#authentication.principal.id == goal.user.id}">
+                    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                    <script type="text/javascript">
+                        window.onload = function () {
+                            var currentAmount = [[${goal.currentAmount}]];
+                            var needToSave = [[${goal.goalAmount}]] - [[${goal.currentAmount}]]
+                            var chart = new CanvasJS.Chart("chartContainer", {
+                                animationEnabled: true,
+                                theme: "light2",
+                                axisY: {
+                                    labelFormatter: function ([]) {
+                                        return "$" + CanvasJS.formatNumber([].value, "#,#00");
+                                    },
+                                    includeZero: false
+                                },
+                                data: [
+                                    {// Change type to "doughnut", "line", "splineArea", etc.
+                                        type: "pie",
+                                        dataPoints: [
+                                            {label: "Current Amount Saved", y: currentAmount},
+                                            {label: "Still Need to Save", y: needToSave}
+                                        ]
+                                    }
+                                    <!--                    <script type="text/javascript">-->
+                                    <!--                        window.onload = function () {-->
+                                    <!--                            var currentAmount = [[${goal.currentAmount}]];-->
+                                    <!--                            var needToSave = [[${goal.goalAmount}]] - [[${goal.currentAmount}]]-->
+                                    <!--                            var chart = new Chart("chartContainer", {-->
+                                    <!--                                animationEnabled: true,-->
+                                    <!--                                theme: "light2",-->
+                                    <!--                                data: [-->
+// <!--                                    {// Change type to "doughnut", "line", "splineArea", etc.-->
+                                    <!--                                        type: "pie",-->
+                                    <!--                                        dataPoints: [-->
+                                    <!--                                            {label: "Current Amount Saved", y: currentAmount},-->
+                                    <!--                                            {label: "Still Need to Save", y: needToSave}-->
+                                    <!--                                        ]-->
+                                    <!--                                    }-->
+
+                                ]
+                            });
+                            chart.render();
+                        }
+                    </script>
+                </div>
+            </th:block>
+            <div id="chartContainer" style="height: 300px; width: 100%;">
+                <div class="chart-container"
+                     style="position: relative; text-align: left; cursor: auto; direction: ltr;">
+                    <canvas class="chart-canvas" width="1872" height="600"
+                            style="width: 936px; height: 300px; position: absolute; user-select: none;"></canvas>
+                    <canvas class="chart-canvas" width="1872" height="600"
+                            style="width: 936px; height: 300px; position: absolute; -webkit-tap-highlight-color: transparent; user-select: none; cursor: default;"></canvas>
+                    <div class="chart-toolbar"
+                         style="position: absolute; right: 1px; top: 1px; border: 1px solid transparent;"></div>
+                    <div class="chart-tooltip"
+                         style="position: absolute; height: auto; box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 2px 2px; z-index: 1000; pointer-events: none; display: none; border-radius: 5px;">
+                        <div style="width: auto; height: auto; min-width: 50px; line-height: normal; margin: 0px; padding: 5px; font-family: Calibri, Arial, Georgia, serif; font-weight: normal; font-style: italic; font-size: 14px; color: rgb(0, 0, 0); text-shadow: rgba(0, 0, 0, 0.1) 1px 1px 1px; text-align: left; border: 2px solid gray; background: rgba(255, 255, 255, 0.9); text-indent: 0px; white-space: nowrap; border-radius: 5px; user-select: none;">
+
+                            <span data-color="#6D78AD" style="color: rgb(109, 120, 173);">Current Amount Saved:</span>
+                            <span data-color="#51CDA0" style="color: rgb(81, 205, 160);">Still Need to Save:</span>
+                            &nbsp;&nbsp;1,000
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
         <th:block sec:authorize="isAuthenticated()">
             <div class="text-center" th:if="${#authentication.principal.id == goal.user.id}">
-                <a class="btn btn-outline-dark rounded" th:href="@{/goal/{id}/edit(id=${goal.id})}"><i
+                <a class="btn btn-outline-dark rounded" th:href="@{/goals/{id}/edit(id=${goal.id})}"><i
                         class="bi bi-pencil"></i></a>
-                <form class="d-inline" th:action="@{/goal/{id}/delete/(id=${goal.id})}" th:method="POST">
+                <form class="d-inline" th:action="@{/goals/{id}/delete/(id=${goal.id})}" th:method="POST">
                     <button id="delete-post-btn" class="btn btn-outline-danger rounded"><i class="bi bi-trash"></i>
                     </button>
                 </form>
@@ -236,6 +262,16 @@
     </div>
 </main>
 <th:block th:replace="partials/partials.html :: scripts"></th:block>
+<script src="/jquery-3.6.0.js"></script>
+<script type="text/javascript" src="/js/date.js"></script>
+<script type="text/javascript" src="/js/parser.js"></script>
+<script>
+
+    $(".dateFormat").each(function(index,element){
+        $(element).text(Date.parse($(element).text()).toString("MMM-dd-yy"))
+    })
+
+</script>
 </body>
 </html>
 
