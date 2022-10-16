@@ -5,8 +5,12 @@
 
     <script>
 
-        function calcule2() {
+        import {DATEDIF, IF, IFERROR, MAX, MIN, OR, PROPER, ROUNDDOWN, TEXT, TODAY} from "@formulajs/formulajs";
 
+        function calcule2() {
+            // var dateCreated = [[${goal.dateCreated}]];
+            // var currentAmount = [[${goal.currentAmount}]];
+            // var needToSave = [[${goal.goalAmount}]] - [[${goal.currentAmount}]]
             let i = 0;
             for (i = 0; i <= 23; i++) {
                 calcule();
@@ -15,37 +19,37 @@
 
         function calcule() {
 
-            Excel2Html.B3.value = (Math.round((TODAY() - 120) * 10000000)) / 10000000;
+            budget.dateCreated = (Math.round((TODAY() - 120) * 10000000)) / 10000000;
 
-            Excel2Html.C3.value = (Math.round((DateSavingsBegin + 180) * 10000000)) / 10000000;
+            budget.endDate = (Math.round(([[${goal.dateCreated}]] + 180) * 10000000)) / 10000000;
 
-            Excel2Html.C6.value = (Math.round((IFERROR(EventCost - AmountSaved, "")) * 1));
+            budget.needToSave = (Math.round((IFERROR([[${goal.goalAmount}]] - [[${goal.currentAmount}]], "")) * 1));
 
-            Excel2Html.B7.value = IFERROR(IF(SavingsPlanInfo > 0, "If I save " + TEXT(SavingsPlanInfo, "#,##0 ") + PROPER(SavingFrequency) + ", as of " + TEXT(TODAY(), "mm.dd.yy" + ":"), "Date of Event is Too Close for a " + PROPER(SavingFrequency) + " Savings Plan"), "");
+            budget.B7.value = IFERROR(IF(SavingsPlanInfo > 0, "If I save " + TEXT(SavingsPlanInfo, "#,##0 ") + PROPER(frequency) + ", as of " + TEXT(TODAY(), "mm.dd.yy" + ":"), "Date of Event is Too Close for a " + PROPER(frequency) + " Savings Plan"), "");
 
-            Excel2Html.C8.value = (Math.round((IFERROR(IF(SavingsPlanInfo > 0, IF(TODAY() > DateSavingsBegin, (TODAY() - DateSavingsBegin) * DailySavings, 0) + AmountSaved, AmountSaved), "")) * 1));
+            budget.C8.value = (Math.round((IFERROR(IF(SavingsPlanInfo > 0, IF(TODAY() > [[${goal.dateCreated}]] , (TODAY() - [[${goal.dateCreated}]]  * DailySavings, 0) + AmountSaved, AmountSaved), "")) * 1));
 
-            Excel2Html.C9.value = (Math.round((IFERROR(MAX(0, EventCost - SavingsToDate), "")) * 1));
+            budget.C9.value = (Math.round((IFERROR(MAX(0, [[${goal.goalAmount}]]  - SavingsToDate), "")) * 1));
 
-            Excel2Html.C13.value = (Math.round((IFERROR(MIN(Goal, IF(DaysUntilEvent = "", 0, Goal / DaysUntilEvent)), "")) * 1));
+            budget.C13.value = (Math.round((IFERROR(MIN(Goal, IF(DaysUntilEvent = "", 0, Goal / DaysUntilEvent)), "")) * 1));
 
-            Excel2Html.D13.value = (Math.round((IFERROR(MIN(Goal, IF(WeeksUntilEvent = "", 0, IF(ROUNDUP(WeeksUntilEvent, 0) = 0, 0, Goal / WeeksUntilEvent))), "")) * 1));
+            budget.D13.value = (Math.round((IFERROR(MIN(Goal, IF(WeeksUntilEvent = "", 0, IF(ROUNDUP(WeeksUntilEvent, 0) = 0, 0, Goal / WeeksUntilEvent))), "")) * 1));
 
-            Excel2Html.E13.value = (Math.round((IFERROR(IF(OR(BiWeeksUntilEvent = 0, BiWeeksUntilEvent = ""), 0, MIN(Goal, IF(parseFloat(Excel2Html.D13.value) = "", 0, Goal / BiWeeksUntilEvent))), "")) * 1));
+            budget.E13.value = (Math.round((IFERROR(IF(OR(BiWeeksUntilEvent = 0, BiWeeksUntilEvent = ""), 0, MIN(Goal, IF(parseFloat(Excel2Html.D13.value) = "", 0, Goal / BiWeeksUntilEvent))), "")) * 1));
 
-            Excel2Html.F13.value = (Math.round((IFERROR(MIN(Goal, IF(Goal = "", 0, IF(OR(MonthsUntilEvent = 0, MonthsUntilEvent = ""), 0, Goal / MonthsUntilEvent))), "")) * 1));
+            budget.F13.value = (Math.round((IFERROR(MIN(Goal, IF(Goal = "", 0, IF(OR(MonthsUntilEvent = 0, MonthsUntilEvent = ""), 0, Goal / MonthsUntilEvent))), "")) * 1));
 
-            Excel2Html.G13.value = (Math.round((IFERROR(IF(OR(Goal = "", Goal = 0), 0, IF(OR(YearsUntilEvent = 0, YearsUntilEvent = ""), 0, Goal / YearsUntilEvent)), "")) * 1));
+            budget.G13.value = (Math.round((IFERROR(IF(OR(Goal = "", Goal = 0), 0, IF(OR(YearsUntilEvent = 0, YearsUntilEvent = ""), 0, Goal / YearsUntilEvent)), "")) * 1));
 
-            Excel2Html.C15.value = (Math.round((IFERROR(IF(DateSavingsBegin < > "", DATEDIF(DateSavingsBegin, EventDate, "D"), ""), "")) * 1));
+            budget.C15.value = (Math.round((IFERROR(IF([[${goal.dateCreated}]]  < > "", DATEDIF([[${goal.dateCreated}]] , [[${goal.endDate}]], "D"), ""), "")) * 1));
 
-            Excel2Html.D15.value = (Math.round((IFERROR(IF(DaysUntilEvent < > "", DaysUntilEvent / 7, ""), "")) * 1));
+            budget.D15.value = (Math.round((IFERROR(IF(DaysUntilEvent < > "", DaysUntilEvent / 7, ""), "")) * 1));
 
-            Excel2Html.E15.value = (Math.round((IFERROR(IF(OR(WeeksUntilEvent = 0, WeeksUntilEvent = ""), 0, ROUNDDOWN(WeeksUntilEvent / 2, 0)), "")) * 1));
+            budget.E15.value = (Math.round((IFERROR(IF(OR(WeeksUntilEvent = 0, WeeksUntilEvent = ""), 0, ROUNDDOWN(WeeksUntilEvent / 2, 0)), "")) * 1));
 
-            Excel2Html.F15.value = (Math.round((IFERROR(IF(DateSavingsBegin < > "", DATEDIF(DateSavingsBegin, EventDate, "M"), ""), "")) * 1));
+            budget.F15.value = (Math.round((IFERROR(IF([[${goal.dateCreated}]]  < > "", DATEDIF([[${goal.dateCreated}]] , [[${goal.endDate}]], "M"), ""), "")) * 1));
 
-            Excel2Html.G15.value = (Math.round((IFERROR(IF(DateSavingsBegin < > "", DATEDIF(DateSavingsBegin, EventDate, "Y"), ""), "")) * 1));
+            budget.G15.value = (Math.round((IFERROR(IF([[${goal.dateCreated}]]  < > "", DATEDIF([[${goal.dateCreated}]] , [[${goal.endDate}]], "Y"), ""), "")) * 1));
 
         }
 
@@ -59,7 +63,7 @@
 <main class="container">
 
 
-    <form name="Excel2Html">
+    <form name="budget">
 
         <table>
             <tr>
@@ -94,7 +98,7 @@
                 <td style="height:20px; width: 80px; background-color:#FFFFFF; border-top: solid 1px #BFDA81; border-bottom: 0px; border-right: 0px; border-left: 0px; font-size: 13px; color:#485C1B; text-align: left; "></td>
 
                 <td style="height:20px; width: 80px; background-color:#FFFFFF; border-top: solid 1px #BFDA81; border-bottom: 0px; border-right: 0px; border-left: 0px; font-size: 13px; color:#485C1B; text-align: left; ">
-                    <label class="form-label" for="">Save Money:</label></td>
+                    <label class="form-label" for="frequency">Save Money:</label></td>
 
                 <td style="height:20px; width: 80px; background-color:#FFFFFF; border-top: solid 1px #BFDA81; border-bottom: 0px; border-right: 0px; border-left: 0px; font-size: 13px;  color:#485C1B; text-align: left; "></td>
 
@@ -107,19 +111,19 @@
                 <td style="height:20px; width: 14px; background-color:#FFFFFF; font-size: 13px; color:#595959; text-align: left; "></td>
 
                 <td style="height:20px; width: 182px; background-color:#FFFFFF; border-top: 0px; border-bottom: solid 1px #D5E7A9; border-right: 0px; border-left: 0px; font-size: 20px;  color:#595959; font-weight: bold; text-align: left; ">
-                    <input type="text" onchange="calcule2()" name="B3" value="" size="8" disabled="disabled"
+                    <input type="text" onchange="calcule2()" name="dateCreated" id="dateCreated" value="" size="8" disabled="disabled"
                            style="background-color: transparent; border:0px; height: 39px; width: 182px; text-align: left; font-size: 20px; color:#595959; font-weight: bold; ">
                 </td>
 
                 <td style="height:20px; width: 80px; background-color:#FFFFFF; border-top: 0px; border-bottom: solid 1px #D5E7A9; border-right: 0px; border-left: 0px; font-size: 20px; color:#595959; font-weight: bold; text-align: left; ">
-                    <input type="text" onchange="calcule2()" name="C3" value="" size="8" disabled="disabled"
+                    <input type="text" onchange="calcule2()" name="endDate"  id="endDate" value="" size="8" disabled="disabled"
                            style="background-color: transparent; border:0px; height: 39px; width: 80px; text-align: left; font-size: 20px; color:#595959; font-weight: bold; ">
                 </td>
 
                 <td style="height:20px; width: 80px; background-color:#FFFFFF; border-top: 0px; border-bottom: solid 1px #D5E7A9; border-right: 0px; border-left: 0px; font-size: 20px;  color:#595959; font-weight: bold; text-align: left; "></td>
 
                 <td style="height:20px; width: 80px; background-color:#FFFFFF; border-top: 0px; border-bottom: solid 1px #D5E7A9; border-right: 0px; border-left: 0px; font-size: 20px; color:#595959; font-weight: bold; text-align: left; ">
-                    <input type="text" onchange="calcule2()" name="E3" value="MONTHLY" size="8"
+                    <input type="text" onchange="calcule2()" name="frequency" id="frequency" value="MONTHLY" size="8"
                            style="background-color: transparent; border:0px; height: 39px; width: 80px; text-align: left; font-size: 20px; color:#595959; font-weight: bold; ">
                 </td>
 
@@ -187,7 +191,7 @@
                 </td>
 
                 <td style="height:20px; width: 80px; background-color:#FFFFFF; border-top: solid 1px #91B936; border-bottom: solid 1px #91B936; border-right: 0px; border-left: 0px; font-size: 20px; color:#595959; font-weight: bold; text-align: right; ">
-                    <input type="text" onchange="calcule2()" name="C6" value="" size="8" disabled="disabled"
+                    <input type="text" onchange="calcule2()" name="needToSave" id="needToSave" value="" size="8" disabled="disabled"
                            style="background-color: transparent; border:0px; height: 90px; width: 80px; text-align: right; font-size: 20px; color:#595959; font-weight: bold; ">
                 </td>
 
@@ -307,7 +311,7 @@
 
             </tr>
 
-            <tr >
+            <tr>
 
                 <td style="height:20px; width: 14px; background-color:#FFFFFF;  font-size: 13px; color:#595959; text-align: left; "></td>
 
@@ -372,7 +376,7 @@
 
             </tr>
 
-            <tr >
+            <tr>
 
                 <td style="height:20px; width: 14px; background-color:#FFFFFF; font-size: 13px; color:#595959; text-align: left; "></td>
 
