@@ -39,7 +39,7 @@ public class GoalsController {
      public String getGoal(@PathVariable long id, Model model){
         Goal goal = goalsDao.findById(id).get();
         model.addAttribute("goal", goal);
-        return "goal/goalShow";
+        return "goal/goalShow3";
 }
 
     @GetMapping("/goals/create")
